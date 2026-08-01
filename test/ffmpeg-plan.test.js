@@ -10,7 +10,7 @@ test('video without audio receives a silent track', () => {
   const [command, args] = buildSceneCommand(timeline.scenes[0], {absolute:'/tmp/screen.webm',hasAudio:false}, timeline, config, '/tmp/out.mp4');
   assert.equal(command, 'ffmpeg');
   assert.ok(args.includes('anullsrc=r=48000:cl=stereo'));
-  assert.ok(args.includes('pad=1080:1920:(ow-iw)/2:(oh-ih)/2:#111111'));
+  assert.ok(args.some((argument) => argument.includes('pad=1080:1920:(ow-iw)/2:(oh-ih)/2:#111111')));
 });
 
 test('concat plan is deterministic', () => {
