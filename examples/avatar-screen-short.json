@@ -1,0 +1,13 @@
+{
+  "version": "1.0",
+  "projectId": "avatar-screen-demo",
+  "canvas": "9:16",
+  "fps": 30,
+  "scenes": [
+    {"id":"hook","type":"avatar","asset":"assets/avatar-hook.mp4","duration":4},
+    {"id":"screen","type":"browser","asset":"assets/screen.webm","duration":12,"fit":"contain"},
+    {"id":"vox","type":"videovox","asset":"assets/vox.mp4","duration":6},
+    {"id":"result","type":"result","asset":"assets/result.png","duration":4},
+    {"id":"cta","type":"avatar","asset":"assets/avatar-cta.mp4","duration":4}
+  ]
+}

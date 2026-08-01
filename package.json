@@ -1,0 +1,10 @@
+{
+  "name": "@cano/hybrid-composer-skill",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "description": "Compile mixed avatar, browser, VOX and visual assets into portable render plans.",
+  "engines": {"node": ">=20"},
+  "scripts": {"test":"node --test","check":"node --check src/*.js bin/*.js","doctor":"node bin/cano-compose.js doctor"},
+  "bin": {"cano-compose":"bin/cano-compose.js"}
+}

@@ -1,5 +1,9 @@
 # CANO Hybrid Composer Skill
 
-Skill de composición para combinar pantalla, avatar, VideoVox, imágenes, audio, subtítulos y branding en entregables verticales y horizontales.
+Compile a universal scene timeline into vertical or horizontal deliverables. Version 0.1 validates assets, computes timing/safe zones and emits deterministic FFmpeg/Remotion render plans. Mock rendering is the default.
 
-Estado: construcción inicial en `feature/standalone-v1`.
+```bash
+node bin/cano-compose.js validate examples/avatar-screen-short.json
+node bin/cano-compose.js plan examples/avatar-screen-short.json
+node bin/cano-compose.js render examples/avatar-screen-short.json --mock
+```
