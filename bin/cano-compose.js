@@ -10,6 +10,7 @@ import { renderWithFfmpeg } from '../src/ffmpeg-render.js';
 import { loadComposerConfig } from '../src/config.js';
 import { runComposerSetup } from '../src/setup.js';
 import { runComposerDoctor } from '../src/doctor.js';
+import { probeTimelineAssets } from '../src/probe.js';
 
 const VERSION = '0.2.0';
 const HELP = `CANO Hybrid Composer ${VERSION}
@@ -19,12 +20,24 @@ Usage:
   cano-compose doctor [--config file]
   cano-compose validate <composition.json>
   cano-compose plan <composition.json> [--config file]
+  cano-compose probe <composition.json> [--config file]
   cano-compose render <composition.json> [--mock|--live --approve-render] [--config file]
   cano-compose --help | --version
 
+Relative asset paths are resolved from the composition file directory.
 Live rendering is local and requires FFmpeg plus --approve-render.`;
 
-async function load(file) { return JSON.parse(await readFile(file, 'utf8')); }
+async function loadComposition(file) {
+  const source=path.resolve(file);
+  const input=JSON.parse(await readFile(source,'utf8'));
+  const base=path.dirname(source);
+  return {
+    ...input,
+    scenes:(input.scenes ?? []).map((scene)=>scene.asset && !path.isAbsolute(scene.asset)
+      ? {...scene,asset:path.resolve(base,scene.asset)}
+      : scene)
+  };
+}
 function valueAfter(args, name, fallback = null) { const index = args.indexOf(name); return index >= 0 ? (args[index + 1] ?? fallback) : fallback; }
 
 async function main() {
@@ -43,7 +56,7 @@ async function main() {
 
   const file = args[1];
   if (!file) throw new Error('composition file is required. Run cano-compose --help');
-  const input = await load(file);
+  const input = await loadComposition(file);
   const check = validateComposition(input);
   if (!check.ok) throw new Error(check.errors.join('; '));
   if (cmd === 'validate') { console.log(JSON.stringify({ ok:true, projectId:input.projectId }, null, 2)); return; }
@@ -51,6 +64,7 @@ async function main() {
   const { config } = await loadComposerConfig(configFile);
   if (timeline.duration > config.maxDurationSeconds) throw new Error(`timeline duration ${timeline.duration}s exceeds configured maximum ${config.maxDurationSeconds}s`);
   if (cmd === 'plan') { console.log(JSON.stringify({ timeline, renderPlan:buildRenderPlan(timeline), renderer:config.renderer }, null, 2)); return; }
+  if (cmd === 'probe') { console.log(JSON.stringify({projectId:input.projectId,assets:await probeTimelineAssets(timeline,config)},null,2)); return; }
   if (cmd === 'render') {
     const out = path.resolve(config.runtimeDir, 'jobs', input.projectId, 'composer');
     const live = args.includes('--live');
