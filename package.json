@@ -1,21 +1,23 @@
 {
   "name": "@cano/hybrid-composer-skill",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": false,
   "type": "module",
-  "description": "Compile mixed avatar, browser, VOX and visual assets into portable render plans.",
+  "description": "Clone-ready hybrid video composer with deterministic timelines and an opt-in local FFmpeg renderer.",
   "license": "MIT",
-  "engines": {
-    "node": ">=20"
-  },
+  "engines": {"node": ">=20"},
+  "keywords": ["ffmpeg", "remotion", "video-composition", "tutorial", "avatar", "playwright"],
+  "repository": {"type":"git","url":"https://github.com/syacreator09-sys/cano-hybrid-composer-skill.git"},
   "scripts": {
-    "test": "node --test",
-    "check": "node scripts/check-syntax.mjs",
-    "audit:release": "node scripts/audit-release.mjs",
-    "verify": "npm test && npm run check && npm run audit:release",
-    "doctor": "node bin/cano-compose.js doctor"
+    "test":"node --test",
+    "check":"node scripts/check-syntax.mjs",
+    "audit:release":"node scripts/audit-release.mjs",
+    "verify":"npm test && npm run check && npm run audit:release",
+    "doctor":"node bin/cano-compose.js doctor",
+    "init":"node bin/cano-compose.js init",
+    "smoke":"node bin/cano-compose.js render examples/avatar-screen-short.json --mock",
+    "prepublishOnly":"npm run verify"
   },
-  "bin": {
-    "cano-compose": "bin/cano-compose.js"
-  }
+  "bin":{"cano-compose":"bin/cano-compose.js"},
+  "files":["bin","src","schemas","scripts","docs","examples","themes","SKILL.md","AGENTS.md","CLAUDE.md","SECURITY.md","PRIVACY.md","USAGE_POLICY.md","BRAND_AND_IDENTITY.md","THIRD_PARTY_NOTICES.md","LICENSE","README.md"]
 }

@@ -1,0 +1,16 @@
+{
+  "version":"1.0",
+  "runtimeDir":".runtime",
+  "renderer":"ffmpeg",
+  "ffmpegPath":"ffmpeg",
+  "ffprobePath":"ffprobe",
+  "videoCodec":"libx264",
+  "audioCodec":"aac",
+  "crf":20,
+  "preset":"medium",
+  "audioSampleRate":48000,
+  "audioChannels":2,
+  "backgroundColor":"#111111",
+  "keepIntermediates":false,
+  "maxDurationSeconds":1800
+}
