@@ -1,0 +1,6 @@
+{
+  "id": "cano-digital",
+  "colors": {"background":"#F4EBDD","foreground":"#111111","accent":"#F47A20"},
+  "captions": {"fontFamily":"Inter","fontWeight":800,"maxLines":2},
+  "branding": {"label":"Cano Digital"}
+}
