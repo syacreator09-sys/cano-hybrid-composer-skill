@@ -1,0 +1,62 @@
+{
+  "project": "CANO Screen Tutorial — Logos V1.1",
+  "status": "APPROVED LOGO INTEGRATION",
+  "base": "Screen Tutorial Test 3",
+  "composition_and_motion_locked": true,
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 24,
+    "frames": 360,
+    "duration_seconds": 15,
+    "codec": "H.264",
+    "audio": false
+  },
+  "changes": [
+    "n8n logo icon + wordmark embedded in app chrome",
+    "n8n icon embedded in sidebar",
+    "WhatsApp integration icon embedded in workflow node",
+    "cursor/camera/timing/layout unchanged"
+  ],
+  "qa": {
+    "exact_adjacent_duplicates": 0,
+    "low_motion_pairs_lt_0_18": 197,
+    "very_low_motion_pairs_lt_0_08": 157,
+    "mean_frame_diff": 0.5019537788740565,
+    "min_diff": [
+      230,
+      231,
+      0.0042361109517514706
+    ],
+    "max_diff": [
+      165,
+      166,
+      11.551961898803711
+    ]
+  },
+  "hashes": {
+    "generated_index_html": "5ebcede17d77b62380d34d2295767a18c40c031fd79438ae37e421d5617f343b",
+    "mp4": "423ccad1097bc9dea84b219996cf98e78e72dadf534ed9b82407aa3862f9fa21",
+    "qa_contact": "9f275e2bb706964881c4610aa4720362833469a87fccd198dd6ac3758cb23363",
+    "qa_transitions": "be48774eb923d17a9e945ba7e5e469160bc6690c1b09843e39d2abc6734d60ff",
+    "qa_metrics": "3ecce462b55f8b5c0c9c14ec4ecaaea29fc2cd8078921ddbd103b1ed56ab58f7"
+  },
+  "asset_provenance": {
+    "n8n_logo_icon": {
+      "source_repo": "n8n-io/n8n",
+      "path": "packages/frontend/@n8n/design-system/src/components/N8nLogo/logo-icon.svg",
+      "blob_sha": "4a043dbb4c183b2e58e00cacc2c51c7de82abb94"
+    },
+    "n8n_logo_text": {
+      "source_repo": "n8n-io/n8n",
+      "path": "packages/frontend/@n8n/design-system/src/components/N8nLogo/logo-text.svg",
+      "blob_sha": "382ca8166c9d8075a7cf237c0925c991227eb37c"
+    },
+    "whatsapp_icon": {
+      "source_repo": "n8n-io/n8n",
+      "path": "packages/nodes-base/nodes/WhatsApp/whatsapp.svg",
+      "blob_sha": "4d96452c7827db7abcf3e6c007db4e09c2506222"
+    }
+  },
+  "rule": "Brand marks are assets. Interface copy, layout, cursor, highlights, state changes and motion stay in code."
+}
