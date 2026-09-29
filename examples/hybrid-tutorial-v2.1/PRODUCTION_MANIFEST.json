@@ -1,0 +1,125 @@
+{
+  "project": "CANO Hybrid Tutorial V2.1",
+  "status": "APPROVED",
+  "approved_at": "2026-09-28",
+  "repository": "syacreator09-sys/cano-hybrid-composer-skill",
+  "branch": "release/hybrid-tutorial-v2.1-approved",
+  "format": {
+    "orientation": "9:16",
+    "final_resolution": "1080x1920",
+    "internal_render_resolution": "720x1280",
+    "fps": 24,
+    "duration_seconds": 12,
+    "expected_frames": 288,
+    "codec": "H.264",
+    "audio": false
+  },
+  "architecture": {
+    "generated_visual_assets": 2,
+    "assets": [
+      {
+        "role": "human input / phone",
+        "source": "generated image, embedded in index.html"
+      },
+      {
+        "role": "AI orb",
+        "source": "generated image, embedded in index.html"
+      }
+    ],
+    "code_owns": [
+      "titles",
+      "subtitles",
+      "message bubble",
+      "intent/date/time chips",
+      "CRM UI",
+      "calendar UI",
+      "confirmation UI",
+      "SVG connectors",
+      "camera/timing",
+      "scene lifecycle",
+      "progress/captions"
+    ],
+    "motion_generators": [
+      "HTML",
+      "CSS",
+      "SVG",
+      "JavaScript"
+    ],
+    "generative_video": false
+  },
+  "narrative": [
+    "client writes",
+    "AI understands",
+    "AI extracts intent/date/time",
+    "CRM and calendar are consulted",
+    "appointment is confirmed and synchronized"
+  ],
+  "composition_v2_1": {
+    "safe_margin_px_internal": 48,
+    "phases": [
+      {
+        "name": "input",
+        "primary": "woman + phone + message"
+      },
+      {
+        "name": "understanding",
+        "primary": "AI orb + extracted data"
+      },
+      {
+        "name": "action",
+        "primary": "CRM + Agenda, symmetric two-column layout"
+      },
+      {
+        "name": "result",
+        "primary": "large centered confirmation card"
+      }
+    ],
+    "approved_rules": [
+      "one primary hierarchy per phase",
+      "no floating mini-orb between CRM and calendar",
+      "title is two lines with clear subtitle separation",
+      "message does not overlap portrait focal area",
+      "CRM and Agenda share a symmetric grid",
+      "confirmation is a large centered payoff",
+      "caption/progress remains aligned to one grid"
+    ]
+  },
+  "qa": {
+    "exact_adjacent_duplicates": 0,
+    "mean_frame_diff": 0.26705453929539297,
+    "min_frame_diff": {
+      "frames": [
+        210,
+        211
+      ],
+      "value": 0.0004861111111111111
+    },
+    "max_frame_diff": {
+      "frames": [
+        220,
+        221
+      ],
+      "value": 2.4715277777777778
+    },
+    "note": "V2.1 approved for composition. V2.2 backlog is motion-density refinement, not layout redesign."
+  },
+  "hashes": {
+    "index.html": "19fc71d32b5d362e851e0e96cbac1b3938a935903345a8a46c305c6d0de42bda",
+    "CANO_Hybrid_Tutorial_V2_1_1080x1920.mp4": "4229e3fd6ac8ca4830fc5ded20142db0f9b1f460bff6f9647d42a1e463343958",
+    "qa_contact_05s.jpg": "fd012499d5118725e0d93c66bfa0b2416d3c1e33205cfee3eb569986e501df1f",
+    "qa_transitions.jpg": "b6a79078b874f580301c0f358525605635f1741a4a1417cd7981fe6c37c6d888"
+  },
+  "local_artifact_names": [
+    "CANO_Hybrid_Tutorial_V2_1_1080x1920.mp4",
+    "CANO_Hybrid_Tutorial_V2_1_720x1280.mp4",
+    "CANO_Hybrid_Tutorial_V2_1_preview.gif",
+    "qa_contact_05s.jpg",
+    "qa_transitions.jpg"
+  ],
+  "v2_2_backlog": [
+    "increase motion density without changing approved grid",
+    "add subtle continuous secondary motion",
+    "improve connector handoffs",
+    "move final profile to 30 fps only after visual parity is preserved"
+  ]
+}
