@@ -13,7 +13,7 @@ import {
   validateTutorialManifest
 } from '../src/tutorial-engine/index.js';
 
-const VERSION = '1.3.0';
+const VERSION = '1.3.1';
 const PACKAGE_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const HELP = `CANO Tutorial Engine ${VERSION}
 
@@ -23,13 +23,13 @@ Usage:
   cano-tutorial plan <manifest.json>
   cano-tutorial build <manifest.json> [--out directory] [--force] [--no-baseline]
   cano-tutorial source <workspace-directory> [--force]
-  cano-tutorial qa <workspace-directory> [--workers 4] [--chromium path] [--force]
+  cano-tutorial qa <workspace-directory> [--chromium path] [--python path] [--force]
   cano-tutorial status <workspace-directory>
   cano-tutorial --help | --version
 
 Production Runner V1 creates the local workspace.
 Mode Builder V1 turns that workspace into deterministic project HTML/JS.
-QA Runner V1 renders and audits every deterministic frame.
+QA Runner V1 renders and audits every deterministic frame through Python Playwright + local Chromium.
 These commands do not call paid/external providers or publish content.`;
 
 function optionValue(args, name, fallback = null) {
@@ -39,7 +39,7 @@ function optionValue(args, name, fallback = null) {
 
 function positionalAfterCommand(args) {
   const result = [];
-  const valued = new Set(['--mode','--out','--workers','--chromium']);
+  const valued = new Set(['--mode','--out','--chromium','--python']);
   for (let i = 1; i < args.length; i += 1) {
     if (valued.has(args[i])) { i += 1; continue; }
     if (args[i].startsWith('--')) continue;
@@ -125,8 +125,8 @@ async function main() {
     if (!workspace) throw new Error('workspace directory is required');
     const result = await runQa(workspace,{
       force:args.includes('--force'),
-      workers:Number(optionValue(args,'--workers',4)),
-      chromiumPath:optionValue(args,'--chromium')
+      chromiumPath:optionValue(args,'--chromium'),
+      pythonPath:optionValue(args,'--python')
     });
     console.log(JSON.stringify({
       status:result.report.status,
