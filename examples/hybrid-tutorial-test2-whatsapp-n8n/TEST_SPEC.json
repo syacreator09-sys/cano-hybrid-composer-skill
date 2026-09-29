@@ -1,0 +1,43 @@
+{
+  "name": "CANO Hybrid Tutorial Portability Test 2",
+  "status": "approved",
+  "template": "V2.2",
+  "flow": [
+    "WhatsApp",
+    "Webhook",
+    "n8n",
+    "AI",
+    "CRM"
+  ],
+  "story": [
+    "lead sends message",
+    "webhook captures message",
+    "n8n orchestrates flow",
+    "AI extracts structured lead data",
+    "CRM registers and schedules follow-up"
+  ],
+  "generated_assets": 2,
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 24,
+    "frames": 288,
+    "duration_seconds": 12,
+    "codec": "H.264",
+    "audio": false
+  },
+  "qa": {
+    "exact_adjacent_duplicates": 0,
+    "safe_area_violations": 0,
+    "low_motion_pairs_lt_0_18": 145,
+    "very_low_motion_pairs_lt_0_08": 54,
+    "mean_frame_diff": 0.4005821716261035
+  },
+  "hashes": {
+    "mp4": "436a595096f2b0452a3c98ffd8be60f2fb5b5aa42c4840c58e3878f5b617a0fa",
+    "html": "294f4ffac39b8660ea39b4f7b9e6917b2d7e991b295d711d4202a115d842a915",
+    "qa_contact": "64c1989b0134e0d844d806545954a6e0303e2258074c8f8113e21e506167838d",
+    "qa_transitions": "20bbedb897ca74b47a2c11bfcba5b040a96c8fc2e83416dd3da049769f01c3fc"
+  },
+  "decision": "V2.2 is the current production template. Start V3 only when a real production limitation is demonstrated."
+}
