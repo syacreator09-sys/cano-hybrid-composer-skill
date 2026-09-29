@@ -1,0 +1,10 @@
+/* CANO Hybrid Tutorial V2.2 — motion pass, composition locked */
+.motionAura{position:absolute;border-radius:50%;pointer-events:none;opacity:0;filter:blur(1px)}
+#auraAI{left:170px;top:320px;width:380px;height:380px;border:1px solid rgba(211,161,59,.20);box-shadow:0 0 70px rgba(211,161,59,.10)}
+#auraAction{left:225px;top:275px;width:270px;height:105px;border:1px solid rgba(42,183,169,.16);box-shadow:0 0 50px rgba(42,183,169,.08)}
+#handoffDot{position:absolute;width:10px;height:10px;border-radius:50%;background:var(--teal2);box-shadow:0 0 0 8px rgba(42,183,169,.12),0 0 30px rgba(42,183,169,.35);opacity:0;pointer-events:none}
+#aiOrbitDot,#actionPulseDot,#confirmPulseDot{position:absolute;width:12px;height:12px;border-radius:50%;opacity:0;pointer-events:none;z-index:20}
+#aiOrbitDot{background:var(--gold2);box-shadow:0 0 0 7px rgba(240,201,108,.13),0 0 26px rgba(211,161,59,.40)}
+#actionPulseDot{background:var(--teal2);box-shadow:0 0 0 6px rgba(42,183,169,.12),0 0 24px rgba(42,183,169,.35)}
+#confirmPulseDot{background:#2dc39f;box-shadow:0 0 0 7px rgba(45,195,159,.10),0 0 24px rgba(45,195,159,.32)}
+.panel .row,.panel .day,.panel .slot,.confirm .info,.resultFooter,.check,.pill{will-change:transform,opacity}

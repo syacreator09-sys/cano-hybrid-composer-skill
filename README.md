@@ -122,3 +122,15 @@ The approved code-driven tutorial checkpoint lives at:
 - [Approved composition notes](docs/CANO_HYBRID_TUTORIAL_V2_1_APPROVED.md)
 
 V2.1 uses **2 generated visual assets + HTML/CSS UI + SVG connectors + deterministic JavaScript motion**. Critical readable text stays in code. No generative video model is used for the motion layer.
+
+
+## CANO Hybrid Tutorial — golden checkpoint
+
+The current approved production method is **V2.2**.
+
+- [Canonical production method](docs/CANO_HYBRID_TUTORIAL_CANONICAL.md)
+- [V2.1 approved composition](examples/hybrid-tutorial-v2.1/)
+- [V2.2 approved motion pass](examples/hybrid-tutorial-v2.2/)
+- [V2.2 golden checkpoint](examples/hybrid-tutorial-v2.2/GOLDEN_CHECKPOINT.md)
+
+Future tutorial work should start from these files instead of reconstructing the format from memory.
