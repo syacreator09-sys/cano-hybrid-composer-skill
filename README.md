@@ -172,3 +172,24 @@ See:
 - [CANO Tutorial Engine V1](docs/CANO_TUTORIAL_ENGINE_V1.md)
 - [Example manifests](examples/tutorial-engine-v1/)
 - [Engine config](config/tutorial-engine-v1.json)
+
+
+## Production Runner V1
+
+CANO Tutorial Engine can now materialize a safe local production workspace from a manifest:
+
+```bash
+cano-tutorial build examples/tutorial-engine-v1/screen-tutorial.json
+```
+
+Inspect baseline integrity and production state:
+
+```bash
+cano-tutorial status .runtime/tutorial-engine/jobs/whatsapp-n8n-screen
+```
+
+The runner creates storyboard, asset/logo slots, QA gates, silent-render plan, audio gate, state, a baseline lockfile and copies only the approved baseline source files.
+
+It does not render media, publish content or call paid/external providers.
+
+See [Production Runner V1](docs/PRODUCTION_RUNNER_V1.md).
