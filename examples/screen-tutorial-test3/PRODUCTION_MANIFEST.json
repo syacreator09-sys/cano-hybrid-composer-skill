@@ -1,0 +1,45 @@
+{
+  "project": "CANO Screen Tutorial Test 3",
+  "status": "APPROVED / STABLE",
+  "mode": "screen-tutorial",
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 24,
+    "frames": 360,
+    "duration_seconds": 15,
+    "codec": "H.264",
+    "audio": false
+  },
+  "architecture": [
+    "HTML/CSS reconstructed application UI",
+    "deterministic JavaScript timeline",
+    "programmed cursor",
+    "camera zoom/pan",
+    "click feedback rings",
+    "node search/selection",
+    "configuration panel",
+    "success feedback",
+    "caption/progress system"
+  ],
+  "qa": {
+    "exact_adjacent_duplicates": 0,
+    "frames_rendered": 360,
+    "frames_expected": 360
+  },
+  "logo_support": {
+    "supported": true,
+    "preferred_formats": [
+      "SVG",
+      "transparent PNG",
+      "WebP"
+    ],
+    "methods": [
+      "relative repository asset",
+      "inline SVG",
+      "embedded data URI"
+    ],
+    "rule": "Use official logo assets where available. Keep interface text and interactive UI in code."
+  },
+  "next_step": "Replace text/glyph placeholders with official brand assets when desired without changing the motion/layout engine."
+}
