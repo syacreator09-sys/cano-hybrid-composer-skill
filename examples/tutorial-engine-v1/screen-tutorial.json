@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "projectId": "whatsapp-n8n-screen",
+  "brief": "Cómo conectar WhatsApp a n8n paso a paso y probar el webhook",
+  "mode": "auto",
+  "canvas": "9:16",
+  "durationSeconds": 15,
+  "fps": 24,
+  "audio": { "enabled": true }
+}
