@@ -137,7 +137,7 @@ Audio remains blocked until visual approval.
 
 ## Next layer
 
-The next component is **Render Runner V1**:
+The next component is **Render Runner V1**, now implemented as the exact-frame silent-master encoder:
 
 ```text
 QA-approved frames
