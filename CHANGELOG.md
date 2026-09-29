@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.0
+
+- Frozen the approved CANO Hybrid Tutorial V2.1 composition baseline.
+- Added a self-contained deterministic HTML/JS example using two generated visual assets.
+- Added production manifest, reproduction guide, renderer and frame-QA script.
+- Documented the canonical split: image assets for visual richness; code for readable UI, connectors, timing and lifecycle.
+- Preserved V2.1 layout as the baseline for V2.2 motion-density refinements.
+
 ## 0.2.0
 
 - Configuración guiada y diagnóstico FFmpeg.
