@@ -9,10 +9,11 @@ import {
   compileTutorialPlan,
   inspectProductionWorkspace,
   routeTutorialBrief,
+  runQa,
   validateTutorialManifest
 } from '../src/tutorial-engine/index.js';
 
-const VERSION = '1.2.0';
+const VERSION = '1.3.0';
 const PACKAGE_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const HELP = `CANO Tutorial Engine ${VERSION}
 
@@ -22,12 +23,14 @@ Usage:
   cano-tutorial plan <manifest.json>
   cano-tutorial build <manifest.json> [--out directory] [--force] [--no-baseline]
   cano-tutorial source <workspace-directory> [--force]
+  cano-tutorial qa <workspace-directory> [--workers 4] [--chromium path] [--force]
   cano-tutorial status <workspace-directory>
   cano-tutorial --help | --version
 
 Production Runner V1 creates the local workspace.
 Mode Builder V1 turns that workspace into deterministic project HTML/JS.
-Neither command calls paid/external providers or publishes content.`;
+QA Runner V1 renders and audits every deterministic frame.
+These commands do not call paid/external providers or publish content.`;
 
 function optionValue(args, name, fallback = null) {
   const index = args.indexOf(name);
@@ -36,7 +39,7 @@ function optionValue(args, name, fallback = null) {
 
 function positionalAfterCommand(args) {
   const result = [];
-  const valued = new Set(['--mode','--out']);
+  const valued = new Set(['--mode','--out','--workers','--chromium']);
   for (let i = 1; i < args.length; i += 1) {
     if (valued.has(args[i])) { i += 1; continue; }
     if (args[i].startsWith('--')) continue;
@@ -114,6 +117,29 @@ async function main() {
       providerCalls:result.report.providerCalls,
       externalSpend:result.report.externalSpend
     }, null, 2));
+    return;
+  }
+
+  if (cmd === 'qa') {
+    const workspace = args[1];
+    if (!workspace) throw new Error('workspace directory is required');
+    const result = await runQa(workspace,{
+      force:args.includes('--force'),
+      workers:Number(optionValue(args,'--workers',4)),
+      chromiumPath:optionValue(args,'--chromium')
+    });
+    console.log(JSON.stringify({
+      status:result.report.status,
+      workspace:result.workspace,
+      qaDir:result.outputDir,
+      frameCount:result.report.metrics.frameCount,
+      exactAdjacentDuplicates:result.report.metrics.exactAdjacentDuplicates.length,
+      meanFrameDiff:result.report.metrics.meanFrameDiff,
+      maxFrameDiff:result.report.metrics.maxDiff,
+      geometryViolations:result.report.geometry.violationCount,
+      manualVisualApprovalRequired:result.report.manualVisualApprovalRequired
+    }, null, 2));
+    if(result.report.status!=='AUTO_PASS') process.exitCode=2;
     return;
   }
 
