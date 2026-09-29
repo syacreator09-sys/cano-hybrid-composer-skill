@@ -213,3 +213,64 @@ test('11. screen motion, field labels and scene captions are data-driven',async(
     assert.equal(project.content.captions[3],'4. Prueba el mensaje');
   }finally{await cleanup(root)}
 });
+
+
+test('12. workflow builder retains code-owned nodes and deterministic renderAt',async()=>{
+  const manifest={
+    version:'1.0',projectId:'workflow-builder-regression',
+    brief:'WhatsApp → n8n → IA → CRM',
+    mode:'workflow',canvas:'9:16',durationSeconds:12,fps:24,audio:{enabled:false},
+    content:{nodes:[
+      {name:'WhatsApp',meta:'Entrada'},
+      {name:'n8n',meta:'Orquesta'},
+      {name:'IA',meta:'Califica'},
+      {name:'CRM',meta:'Registra'}
+    ]}
+  };
+  const {root,result}=await build(manifest);
+  try{
+    const html=await readFile(result.indexHtml,'utf8');
+    assert.match(html,/WORKFLOW · MODE BUILDER V1/);
+    assert.match(html,/WhatsApp/);
+    assert.match(html,/CRM/);
+    assert.match(html,/function renderAt\(frame\)/);
+    assert.equal(result.report.providerCalls,0);
+    assert.equal(result.report.externalSpend,0);
+  }finally{await cleanup(root)}
+});
+
+test('13. explainer builder retains Hybrid V2.2 motion and substitutes content',async()=>{
+  const manifest={
+    version:'1.0',projectId:'explainer-builder-regression',
+    brief:'Explica cómo la IA convierte un mensaje en una cita',
+    mode:'explainer',canvas:'9:16',durationSeconds:12,fps:24,audio:{enabled:false},
+    content:{
+      titleLine1:'Mensaje → IA',
+      titleAccent:'acción real',
+      message:{copy:'Necesito una demo mañana.'},
+      extraction:{intent:'Demo',date:'Mañana',time:'12:00'},
+      result:{title:'Demo confirmada',time:'12:00 PM'}
+    }
+  };
+  const {root,result}=await build(manifest);
+  try{
+    const html=await readFile(result.indexHtml,'utf8');
+    assert.match(html,/Mensaje → IA/);
+    assert.match(html,/acción real/);
+    assert.match(html,/Demo confirmada/);
+    assert.match(html,/motionAura/);
+    assert.match(html,/EXPLAINER · MODE BUILDER V1/);
+    assert.match(html,/function renderAt\(frame\)/);
+  }finally{await cleanup(root)}
+});
+
+test('14. marked source rebuild still requires explicit force and supports safe rebuild',async()=>{
+  const manifest=screenManifest({projectId:'source-force-regression'});
+  const {root,workspace}=await build(manifest);
+  try{
+    await assert.rejects(()=>buildModeSource(workspace),/project source already exists/);
+    const rebuilt=await buildModeSource(workspace,{force:true});
+    assert.equal(rebuilt.report.builder,'CANO Mode Builder V1');
+    assert.equal(rebuilt.report.readyForRender,true);
+  }finally{await cleanup(root)}
+});
