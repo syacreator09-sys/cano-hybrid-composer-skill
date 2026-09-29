@@ -136,16 +136,14 @@ assetsReady = true
 
 The render plan also advances to `source-built`.
 
-## Next layer
+## QA handoff
 
-The next production component is **QA Runner V1**:
+Mode Builder now hands directly to **QA Runner V1**:
 
-```text
-project HTML
-→ exact frame render
-→ geometry checks
-→ transition-density checks
-→ duplicate detection
-→ contact sheets
-→ PASS / FAIL
+```bash
+cano-tutorial qa .runtime/tutorial-engine/jobs/<projectId>
 ```
+
+The QA stage renders the exact deterministic frame sequence, measures temporal continuity, audits critical geometry, creates contact/transition sheets and preserves the reviewed frames for Render Runner V1.
+
+See `docs/QA_RUNNER_V1.md`.
