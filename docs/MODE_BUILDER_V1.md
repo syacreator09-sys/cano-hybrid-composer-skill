@@ -207,7 +207,7 @@ npm run verify
 
 ## Next layer
 
-The next production component is **QA Runner V1**:
+The next production component is **QA Runner V1**, now implemented as the deterministic local frame-audit layer:
 
 ```text
 project HTML

@@ -212,3 +212,16 @@ Mode Builder V1 supports:
 The generated source lives in `source/project/` and makes no provider calls or external spend.
 
 See [Mode Builder V1](docs/MODE_BUILDER_V1.md).
+
+
+## QA Runner V1
+
+Source-built tutorials can be rendered frame-by-frame for deterministic visual QA:
+
+```bash
+cano-tutorial qa .runtime/tutorial-engine/jobs/<projectId>
+```
+
+QA Runner V1 uses local Chromium + Python Playwright, blocks external HTTP/HTTPS requests, checks exact frame count, adjacent duplicates, transition density and critical geometry, and writes contact/transition sheets under `.runtime/`. Automated QA never grants human visual approval and never activates audio or publishing.
+
+See [QA Runner V1](docs/QA_RUNNER_V1.md).
