@@ -1,0 +1,65 @@
+{
+  "project": "CANO Screen Tutorial Mode V1.2",
+  "status": "APPROVED TECHNICAL BASELINE",
+  "base": "Screen Tutorial Logos V1.1",
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 24,
+    "frames": 360,
+    "duration_seconds": 15,
+    "codec": "H.264",
+    "audio": false
+  },
+  "fixes": [
+    "continuous camera trajectory across configuration handoff",
+    "continuous camera trajectory into test/result phase",
+    "AI node overflow fixed",
+    "phase chip z-index fixed",
+    "final success state held solid with one-pass settle"
+  ],
+  "qa": {
+    "frame_count": 360,
+    "exact_adjacent_duplicates": [],
+    "low_motion_pairs_lt_0_18": 188,
+    "very_low_motion_pairs_lt_0_08": 64,
+    "mean_frame_diff": 0.45931164955092507,
+    "min_diff": [
+      11,
+      12,
+      0.027847222983837128
+    ],
+    "max_diff": [
+      160,
+      161,
+      3.1003124713897705
+    ],
+    "critical_165_166": 1.0720138549804688,
+    "critical_259_260": 1.2727950811386108,
+    "v1_1_baseline": {
+      "low_motion_pairs_lt_0_18": 197,
+      "very_low_motion_pairs_lt_0_08": 157,
+      "mean_frame_diff": 0.5019537788740565,
+      "max_diff": [
+        165,
+        166,
+        11.551961898803711
+      ]
+    },
+    "notes": [
+      "V1.1 camera discontinuity at frames 165→166 removed",
+      "second camera reset around frames 259→260 converted to continuous interpolation",
+      "AI node moved fully inside workflow canvas",
+      "phase chip raised above browser/camera layer",
+      "final success state remains solid through final frame"
+    ]
+  },
+  "hashes": {
+    "index_html": "cb6dfef3acf630b1e28fcb8b9fcc39246c19694a9144d6722301c8c79a6c058d",
+    "mp4": "431cdc20ef502876cc1eaf80937161637eced258e9b250ff5afb87c960d2989d",
+    "qa_contact": "6faed943590f2b6301f3eb31d7bed9c3ba98d80d4802ab317e1f3891424c7631",
+    "qa_transitions": "72224a3fc2d29a22144ed6aa804411f2687488cc6e8650a67aedcda999620428",
+    "qa_metrics": "f072bb80f44ce4da6161e94458f7e06670022d8bc3ab4f76e34f9e75285ee452"
+  },
+  "decision": "V1.2 replaces V1.1 as the stable technical baseline for future Screen Tutorial productions."
+}
