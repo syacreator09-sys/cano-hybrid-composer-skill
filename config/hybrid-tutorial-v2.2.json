@@ -1,0 +1,15 @@
+{
+  "version": "2.2",
+  "composition_base": "2.1",
+  "composition_locked": true,
+  "primary_motion_loops": false,
+  "secondary_motion": "deterministic one-pass",
+  "output": {
+    "aspect_ratio": "9:16",
+    "width": 1080,
+    "height": 1920,
+    "fps": 24,
+    "duration_seconds": 12
+  },
+  "next_gate": "validate on a second real tutorial topic before canonical promotion"
+}
