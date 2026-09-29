@@ -80,6 +80,6 @@ test('QA refuses a workspace before source is ready',async()=>{
 
 test('QA driver blocks external HTTP and HTTPS requests',async()=>{
   const driver=await readFile(new URL('../scripts/tutorial_qa_driver.py',import.meta.url),'utf8');
-  assert.ok(driver.includes('url.startswith((\\\"http://\\\", \\\"https://\\\"))'));
+  assert.ok(driver.includes('url.startswith((\"http://\", \"https://\"))'));
   assert.match(driver,/blockedNetworkRequests/);
 });
