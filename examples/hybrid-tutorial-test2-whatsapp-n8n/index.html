@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CANO Hybrid Tutorial — Test 2</title>
+<style>
+:root{--bg:#f7f3ea;--ink:#101820;--muted:#68737c;--gold:#d3a13b;--gold2:#f1cb75;--teal:#0f766e;--teal2:#2ab7a9;--green:#25d366;--orange:#ff6d3b;--blue:#3478f6;--white:#fffdf9}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:#101418;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif}
+#stage{position:relative;width:720px;height:1280px;overflow:hidden;color:var(--ink);background:radial-gradient(circle at 78% 13%,rgba(241,203,117,.23),transparent 23%),radial-gradient(circle at 18% 78%,rgba(42,183,169,.12),transparent 26%),linear-gradient(180deg,#fbf8f1 0%,#f3eee4 100%);}
+#stage:after{content:"";position:absolute;inset:0;opacity:.09;pointer-events:none;background-image:radial-gradient(rgba(0,0,0,.14) .55px,transparent .7px);background-size:9px 9px;mix-blend-mode:multiply}
+.safe{position:absolute;left:48px;right:48px}
+.kicker{top:68px;font-size:15px;font-weight:850;letter-spacing:.18em;color:#8b6a25;opacity:0}
+.title{top:103px;font-size:57px;line-height:.97;letter-spacing:-.055em;font-weight:860;max-width:620px;opacity:0;transform-origin:left top}
+.title .accent{color:var(--gold)}
+.sub{top:230px;font-size:21px;line-height:1.32;color:var(--muted);max-width:580px;opacity:0}
+.phase{position:absolute;left:48px;top:286px;padding:10px 14px;border-radius:999px;background:#101820;color:#fff;font-size:13px;font-weight:850;letter-spacing:.12em;opacity:0}
+.hero{position:absolute;left:48px;top:338px;width:318px;height:592px;border-radius:34px;overflow:hidden;background:#eee;box-shadow:0 24px 68px rgba(38,35,29,.13);opacity:0}
+.hero img{width:100%;height:100%;object-fit:cover;object-position:33% 47%;display:block;transform:scale(1.02)}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 68%,rgba(247,243,234,.35) 84%,#f7f3ea 100%)}
+.msg{position:absolute;left:390px;top:470px;width:282px;padding:21px 23px;background:rgba(255,255,255,.98);border:1px solid rgba(20,28,35,.07);border-radius:26px 26px 26px 10px;box-shadow:0 18px 48px rgba(30,37,42,.12);opacity:0;transform-origin:left bottom}
+.msgHead{display:flex;align-items:center;gap:9px;font-size:12px;font-weight:850;letter-spacing:.10em;color:#178848;margin-bottom:8px}
+.waDot{width:26px;height:26px;border-radius:50%;background:var(--green);display:grid;place-items:center;color:white;font-size:13px}
+.msgCopy{font-size:24px;line-height:1.14;font-weight:800;letter-spacing:-.025em}
+.msgMeta{font-size:12px;color:#8b949c;margin-top:11px}
+#paths{position:absolute;inset:0;width:720px;height:1280px;pointer-events:none}
+.flow{fill:none;stroke:var(--gold);stroke-width:5.5;stroke-linecap:round;stroke-linejoin:round;opacity:0}
+.flow.teal{stroke:var(--teal2)} .flow.orange{stroke:var(--orange)} .flow.blue{stroke:var(--blue)}
+.pulse{position:absolute;width:14px;height:14px;border-radius:50%;background:var(--gold2);box-shadow:0 0 0 7px rgba(241,203,117,.14),0 0 27px rgba(211,161,59,.38);opacity:0}
+.workflow{position:absolute;left:48px;top:350px;width:624px;height:540px;opacity:0}
+.workflowBg{position:absolute;inset:0;border-radius:36px;background:rgba(255,255,255,.77);border:1px solid rgba(20,28,35,.06);box-shadow:0 24px 64px rgba(35,40,42,.09);backdrop-filter:blur(10px)}
+.workflowLabel{position:absolute;left:28px;top:25px;font-size:14px;letter-spacing:.14em;font-weight:850;color:#8b6a25}
+.node{position:absolute;width:126px;height:112px;border-radius:24px;background:#fff;border:1px solid rgba(18,28,34,.07);box-shadow:0 14px 34px rgba(33,39,43,.09);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;opacity:0;transform-origin:center}
+.nodeIcon{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;font-weight:900;font-size:17px}
+.nodeName{font-size:15px;font-weight:820} .nodeSmall{font-size:10px;letter-spacing:.08em;color:#818b93;font-weight:760}
+#nWA{left:26px;top:112px} #nHook{left:171px;top:112px} #nN8N{left:316px;top:112px} #nAI{left:461px;top:112px}
+#nCRM{left:245px;top:315px;width:136px}
+.waIcon{background:#e7f9ed;color:#178848} .hookIcon{background:#f2f5f7;color:#44515c} .n8nIcon{background:#fff1ec;color:#e75327} .aiIcon{background:#f8efd6;color:#8b6a25} .crmIcon{background:#e9f0ff;color:#2f64be}
+.n8nGlyph{position:relative;width:40px;height:31px} .n8nGlyph i{position:absolute;width:9px;height:9px;border:2px solid var(--orange);border-radius:50%;background:#fff} .n8nGlyph i:nth-child(1){left:1px;top:11px} .n8nGlyph i:nth-child(2){left:15px;top:1px} .n8nGlyph i:nth-child(3){left:15px;top:21px} .n8nGlyph i:nth-child(4){left:30px;top:11px} .n8nGlyph:before,.n8nGlyph:after{content:"";position:absolute;height:2px;background:var(--orange);width:19px;left:8px;top:14px;transform-origin:left center} .n8nGlyph:before{transform:rotate(-35deg)} .n8nGlyph:after{transform:rotate(35deg)}
+.workflow svg{position:absolute;inset:0;width:624px;height:540px;pointer-events:none}
+.wire{fill:none;stroke:#d2ccc1;stroke-width:4.5;stroke-linecap:round;opacity:0} .wire.hot{stroke:var(--orange)} .wire.teal{stroke:var(--teal2)}
+.flowDot{position:absolute;width:12px;height:12px;border-radius:50%;background:var(--orange);box-shadow:0 0 0 6px rgba(255,109,59,.12),0 0 24px rgba(255,109,59,.32);opacity:0}
+.aiWrap{position:absolute;left:202px;top:350px;width:316px;height:316px;opacity:0}
+.aiWrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 26px 38px rgba(62,50,20,.16))}
+.aiRing{position:absolute;inset:-10px;border-radius:50%;border:2px solid rgba(211,161,59,.28)}
+.aiOrbit{position:absolute;width:12px;height:12px;border-radius:50%;background:var(--gold2);box-shadow:0 0 0 7px rgba(241,203,117,.13),0 0 26px rgba(211,161,59,.38);opacity:0}
+.extract{position:absolute;left:70px;right:70px;top:728px;display:grid;grid-template-columns:repeat(2,1fr);gap:12px;opacity:0}
+.pill{padding:15px 14px;border-radius:17px;background:rgba(255,255,255,.95);border:1px solid rgba(20,30,38,.07);box-shadow:0 10px 26px rgba(31,37,42,.06);font-size:15px;font-weight:780;text-align:left}
+.pill b{display:block;font-size:11px;letter-spacing:.10em;color:var(--teal);margin-bottom:4px}
+.temp{color:#b36b11}
+.crmCard{position:absolute;left:60px;top:350px;width:600px;padding:32px 34px 30px;background:rgba(255,255,255,.97);border:1px solid rgba(20,28,35,.07);border-radius:32px;box-shadow:0 26px 64px rgba(38,42,44,.13);opacity:0}
+.crmTop{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px} .crmTitle{font-size:33px;font-weight:850;letter-spacing:-.035em} .status{padding:9px 12px;border-radius:999px;background:#e9f8f3;color:var(--teal);font-size:12px;font-weight:850;letter-spacing:.08em}
+.leadRow{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px} .leadBox{padding:17px;border-radius:17px;background:#f5f2eb} .leadBox small{display:block;font-size:11px;color:#818b93;letter-spacing:.07em;margin-bottom:5px} .leadBox b{font-size:17px}
+.score{margin-top:16px;padding:18px;border-radius:18px;background:#101820;color:white;display:flex;justify-content:space-between;align-items:center} .score strong{font-size:24px} .score span{font-size:12px;letter-spacing:.12em;color:#f1cb75;font-weight:850}
+.pipeline{margin-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:9px} .step{padding:13px 10px;border-radius:14px;background:#f2efe8;text-align:center;font-size:12px;color:#6d7780;font-weight:780} .step.active{background:#e8f7f3;color:var(--teal)}
+.follow{margin-top:18px;border-top:1px solid #e9e4db;padding-top:17px;display:flex;justify-content:space-between;align-items:center;font-size:13px} .follow b{color:var(--teal)}
+.check{width:62px;height:62px;border-radius:50%;background:linear-gradient(180deg,#2dc39f,#0b8d72);display:grid;place-items:center;color:#fff;font-size:36px;font-weight:900;box-shadow:0 14px 34px rgba(13,141,114,.22);margin-bottom:18px}
+.caption{position:absolute;left:48px;right:48px;bottom:58px;opacity:0} .capRow{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:13px} .capText{font-size:20px;font-weight:820;letter-spacing:-.02em} .capMeta{font-size:11px;letter-spacing:.12em;font-weight:800;color:#8b6a25} .progress{height:6px;background:#ddd5c7;border-radius:99px;overflow:hidden} .progress span{display:block;height:100%;background:var(--gold);width:0%}
+</style></head><body>
+<div id="stage">
+<div class="safe kicker" id="kicker">CANO DIGITAL · AUTOMATIZACIÓN</div>
+<div class="safe title" id="title">De WhatsApp a un<br><span class="accent">lead calificado</span></div>
+<div class="safe sub" id="sub">Así pasa una conversación por n8n, IA y CRM sin trabajo manual.</div>
+<div class="phase" id="phase">01 · MENSAJE</div>
+<svg id="paths" viewBox="0 0 720 1280"><path id="p1" class="flow" d="M 555 610 C 520 608, 482 574, 448 548" pathLength="100"/></svg>
+<div class="hero" id="hero"><img src="./assets/woman_phone.jpg"></div>
+<div class="msg" id="msg"><div class="msgHead"><div class="waDot">☎</div>WHATSAPP</div><div class="msgCopy">Hola, quiero automatizar mis ventas. ¿Cómo funciona?</div><div class="msgMeta">Mensaje nuevo · 6:42 PM</div></div>
+<div class="pulse" id="pulse"></div>
+<div class="workflow" id="workflow"><div class="workflowBg"></div><div class="workflowLabel">FLUJO AUTOMÁTICO</div>
+<svg viewBox="0 0 624 540"><path id="w1" class="wire hot" d="M 152 168 C 160 168, 165 168, 171 168" pathLength="100"/><path id="w2" class="wire hot" d="M 297 168 C 305 168, 310 168, 316 168" pathLength="100"/><path id="w3" class="wire teal" d="M 442 168 C 450 168, 455 168, 461 168" pathLength="100"/><path id="w4" class="wire teal" d="M 524 224 C 520 285, 430 350, 375 370" pathLength="100"/></svg>
+<div class="node" id="nWA"><div class="nodeIcon waIcon">☎</div><div class="nodeName">WhatsApp</div><div class="nodeSmall">ENTRADA</div></div>
+<div class="node" id="nHook"><div class="nodeIcon hookIcon">↯</div><div class="nodeName">Webhook</div><div class="nodeSmall">CAPTURA</div></div>
+<div class="node" id="nN8N"><div class="nodeIcon n8nIcon"><div class="n8nGlyph"><i></i><i></i><i></i><i></i></div></div><div class="nodeName">n8n</div><div class="nodeSmall">ORQUESTA</div></div>
+<div class="node" id="nAI"><div class="nodeIcon aiIcon">IA</div><div class="nodeName">Agente IA</div><div class="nodeSmall">ANALIZA</div></div>
+<div class="node" id="nCRM"><div class="nodeIcon crmIcon">CRM</div><div class="nodeName">CRM</div><div class="nodeSmall">REGISTRA</div></div>
+<div class="flowDot" id="flowDot"></div></div>
+<div class="aiWrap" id="ai"><div class="aiRing" id="aiRing"></div><img src="./assets/ai_orb_clean.jpg"></div><div class="aiOrbit" id="aiOrbit"></div>
+<div class="extract" id="extract"><div class="pill"><b>NOMBRE</b>Ana</div><div class="pill"><b>INTERÉS</b>Automatización de ventas</div><div class="pill"><b>PLAZO</b>30 días</div><div class="pill"><b>TEMPERATURA</b><span class="temp">TIBIO</span></div></div>
+<div class="crmCard" id="crmCard"><div class="check" id="check">✓</div><div class="crmTop"><div class="crmTitle">Lead registrado</div><div class="status">CRM ACTUALIZADO</div></div><div class="leadRow"><div class="leadBox"><small>NOMBRE</small><b>Ana</b></div><div class="leadBox"><small>ORIGEN</small><b>WhatsApp</b></div><div class="leadBox"><small>INTERÉS</small><b>Automatización</b></div><div class="leadBox"><small>PLAZO</small><b>30 días</b></div></div><div class="score"><strong>TIBIO</strong><span>LEAD CALIFICADO</span></div><div class="pipeline"><div class="step active">Capturado ✓</div><div class="step active">Calificado ✓</div><div class="step" id="followStep">Seguimiento</div></div><div class="follow"><span>Próxima acción</span><b id="followText">Programando seguimiento…</b></div></div>
+<div class="caption" id="caption"><div class="capRow"><div class="capText" id="capText">1. El lead escribe</div><div class="capMeta">HYBRID TEMPLATE · TEST 2</div></div><div class="progress"><span id="prog"></span></div></div>
+</div>
+<script>
+const FPS=24,DUR=12;const $=id=>document.getElementById(id);const E={stage:$("stage"),kicker:$("kicker"),title:$("title"),sub:$("sub"),phase:$("phase"),hero:$("hero"),msg:$("msg"),p1:$("p1"),pulse:$("pulse"),workflow:$("workflow"),w1:$("w1"),w2:$("w2"),w3:$("w3"),w4:$("w4"),nWA:$("nWA"),nHook:$("nHook"),nN8N:$("nN8N"),nAI:$("nAI"),nCRM:$("nCRM"),flowDot:$("flowDot"),ai:$("ai"),aiRing:$("aiRing"),aiOrbit:$("aiOrbit"),extract:$("extract"),crmCard:$("crmCard"),check:$("check"),followStep:$("followStep"),followText:$("followText"),caption:$("caption"),capText:$("capText"),prog:$("prog")};
+const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));const sm=x=>x<=0?0:x>=1?1:x*x*(3-2*x);const ease=x=>x<=0?0:x>=1?1:1-Math.pow(1-x,3);const pr=(t,a,b)=>clamp((t-a)/(b-a));
+function life(t,a,b,fi=.16,fo=.16){const x=pr(t,a,b);if(x<=0||x>=1)return 0;let v=1;if(x<fi)v=sm(x/fi);if(x>1-fo)v=Math.min(v,sm((1-x)/fo));return v}
+function op(el,v){el.style.opacity=v.toFixed(3)}function tf(el,x,y,s=1,r=0){el.style.transform=`translate(${x}px,${y}px) scale(${s}) rotate(${r}deg)`}function draw(path,v){path.style.opacity=v>0?1:0;path.style.strokeDasharray="100";path.style.strokeDashoffset=(100-100*ease(v)).toFixed(2)}
+function renderAt(frame){const t=frame/FPS,g=clamp(t/DUR);E.stage.style.backgroundPosition=`${-7*g}px ${-4*g}px, ${5*g}px ${8*g}px, 0 0`;
+ const h=life(t,0,2.7,.15,.22);op(E.kicker,h);op(E.title,h);op(E.sub,h);tf(E.title,0,10*(1-ease(h))-3*pr(t,.4,2.2),.97+.03*ease(h)+.006*pr(t,.4,2.2));op(E.phase,life(t,.45,11.7,.10,.05));if(t<3.05)E.phase.textContent="01 · MENSAJE";else if(t<6.22)E.phase.textContent="02 · N8N ORQUESTA";else if(t<9.1)E.phase.textContent="03 · IA CALIFICA";else E.phase.textContent="04 · CRM REGISTRA";
+ const vh=life(t,.75,3.55,.16,.2);op(E.hero,vh);tf(E.hero,-12*(1-ease(vh))-4*pr(t,.75,3.55),8*(1-ease(vh))-6*pr(t,.75,3.55),.97+.03*ease(vh)+.01*pr(t,.75,3.55));const vm=life(t,1.35,3.55,.16,.22);op(E.msg,vm);tf(E.msg,26*(1-ease(vm))-5*pr(t,1.35,3.55),10*(1-ease(vm))-5*pr(t,1.35,3.55),.95+.05*ease(vm));const p=life(t,2.38,3.55,.10,.18);draw(E.p1,p);op(E.pulse,p);E.pulse.style.left=(555-122*ease(pr(t,2.38,3.55)))+"px";E.pulse.style.top=(608-92*ease(pr(t,2.38,3.55)))+"px";
+ const wf=life(t,3.15,6.30,.12,.14);op(E.workflow,wf);tf(E.workflow,0,18*(1-ease(wf))-4*pr(t,3.15,6.55),.97+.03*ease(wf));const nodes=[E.nWA,E.nHook,E.nN8N,E.nAI,E.nCRM];const times=[[3.35,4.1],[3.7,4.45],[4.05,4.8],[4.4,5.15],[5.05,5.95]];nodes.forEach((n,i)=>{const q=sm(pr(t,times[i][0],times[i][1]));op(n,wf*q);tf(n,0,10*(1-q),.92+.08*q)});draw(E.w1,life(t,3.6,4.3,.08,.08));draw(E.w2,life(t,4.0,4.7,.08,.08));draw(E.w3,life(t,4.4,5.1,.08,.08));draw(E.w4,life(t,4.95,5.95,.08,.10));const fd=life(t,3.7,5.85,.05,.08);op(E.flowDot,fd);const fp=pr(t,3.7,5.85);let x,y;if(fp<.25){let q=ease(fp/.25);x=152+(171-152)*q;y=168}else if(fp<.5){let q=ease((fp-.25)/.25);x=297+(316-297)*q;y=168}else if(fp<.75){let q=ease((fp-.5)/.25);x=442+(461-442)*q;y=168}else{let q=ease((fp-.75)/.25);x=524+(313-524)*q;y=224+(370-224)*q}E.flowDot.style.left=(48+x-6)+"px";E.flowDot.style.top=(350+y-6)+"px";
+ const aiV=life(t,6.12,9.05,.12,.12);op(E.ai,aiV);const ap=pr(t,6.12,9.05);tf(E.ai,0,18*(1-ease(aiV))-9*ap,.90+.12*ease(aiV)+.015*ap,-4+15*ap);E.aiRing.style.transform=`rotate(${170*ap}deg) scale(${.97+.08*ease(aiV)+.02*ap})`;const ao=life(t,6.28,8.95,.08,.10);op(E.aiOrbit,ao);const ang=(-160+320*pr(t,6.28,8.95))*Math.PI/180;E.aiOrbit.style.left=(354+218*Math.cos(ang))+"px";E.aiOrbit.style.top=(522+130*Math.sin(ang))+"px";const ex=life(t,6.82,9.0,.12,.13);op(E.extract,ex);tf(E.extract,0,18*(1-ease(ex))-4*pr(t,6.82,9.0),.97+.03*ease(ex));[...E.extract.children].forEach((el,i)=>{const q=sm(pr(t,6.92+i*.16,7.72+i*.16));el.style.opacity=.35+.65*q;el.style.transform=`translateY(${11*(1-q)-2*q}px) scale(${.96+.04*q})`});
+ const cr=life(t,9.05,12.01,.10,.02);op(E.crmCard,cr);const cp=pr(t,9.05,12.01);tf(E.crmCard,0,28*(1-ease(cr))-8*cp,.94+.07*ease(cr)+.01*cp);const qc=sm(pr(t,9.0,9.62));E.check.style.transform=`scale(${.72+.34*qc}) rotate(${-10+10*qc}deg)`;[...E.crmCard.querySelectorAll('.leadBox')].forEach((el,i)=>{const q=sm(pr(t,9.35+i*.12,10.05+i*.12));el.style.opacity=.4+.6*q;el.style.transform=`translateY(${10*(1-q)-2*q}px) scale(${.97+.03*q})`});const s=sm(pr(t,10.1,10.85));E.followStep.style.background=`rgba(42,183,169,${.08+.12*s})`;E.followStep.style.color=s>.6?"#0f766e":"#6d7780";E.followText.textContent=t>10.65?"Seguimiento automático · 24 h":"Programando seguimiento…";
+ op(E.caption,1);if(t<3.05)E.capText.textContent="1. El lead escribe";else if(t<6.22)E.capText.textContent="2. n8n mueve el mensaje";else if(t<9.1)E.capText.textContent="3. La IA extrae y califica";else E.capText.textContent="4. El CRM registra y da seguimiento";E.prog.style.width=(100*g)+"%";return true}
+window.renderAt=renderAt;window.audit=()=>["kicker","title","sub","phase","hero","msg","workflow","ai","extract","crmCard","caption"].map(id=>{const e=$(id),r=e.getBoundingClientRect(),o=parseFloat(getComputedStyle(e).opacity)||0;return{id,opacity:o,x:r.x,y:r.y,w:r.width,h:r.height}});renderAt(0);
+</script></body></html>
