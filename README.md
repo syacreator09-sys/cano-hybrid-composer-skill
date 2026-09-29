@@ -144,3 +144,31 @@ The third production mode is now frozen as a stable example:
 - [Approved Test 3](examples/screen-tutorial-test3/)
 
 It supports cursor, clicks, zoom/pan, highlights, application-state changes and real SVG/PNG brand logos.
+
+
+## CANO Tutorial Engine V1
+
+The three validated production formats are now unified behind a deterministic router:
+
+- **Explainer Mode** → Hybrid Tutorial V2.2
+- **Workflow Mode** → Hybrid Tutorial V2.2
+- **Screen Tutorial Mode** → Screen Tutorial V1.2
+
+Quick routing:
+
+```bash
+cano-tutorial route "Cómo conectar WhatsApp a n8n paso a paso"
+```
+
+Manifest planning:
+
+```bash
+cano-tutorial plan examples/tutorial-engine-v1/screen-tutorial.json
+```
+
+The engine plans and routes only. It does not call external render/audio providers and does not spend credits.
+
+See:
+- [CANO Tutorial Engine V1](docs/CANO_TUTORIAL_ENGINE_V1.md)
+- [Example manifests](examples/tutorial-engine-v1/)
+- [Engine config](config/tutorial-engine-v1.json)
