@@ -224,7 +224,7 @@ cano-tutorial qa .runtime/tutorial-engine/jobs/whatsapp-n8n-screen
 
 QA Runner V1 generates every deterministic 720×1280 frame, temporal metrics, geometry audit, contact sheet and strongest-transition sheet. It preserves the rendered frame sequence so the next Render Runner can encode exactly what was reviewed.
 
-No Playwright/Puppeteer dependency is required; the runner uses the local Chromium/Chrome executable.
+QA uses Python Playwright to control one local Chromium/Chrome process. Install the Python package with `python -m pip install playwright`; a separate Playwright browser download is not required when a compatible local Chrome/Chromium executable is available.
 
 Automated PASS does not equal publication approval. `visualApproved` remains false until the visual review is explicitly accepted.
 
