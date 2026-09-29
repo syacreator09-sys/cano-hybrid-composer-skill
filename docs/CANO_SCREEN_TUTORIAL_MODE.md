@@ -123,3 +123,13 @@ Future screen tutorials should change:
 - timing.
 
 They should **not** rebuild the engine.
+
+
+## Logo-ready validation
+
+The stable Screen Tutorial Mode has now been validated with real SVG product marks without changing its motion system.
+
+Approved example:
+- `examples/screen-tutorial-logos-v1.1/`
+
+The logo layer is treated as an asset layer. Cursor, zoom, clicks, labels, state changes and QA remain code-driven.
