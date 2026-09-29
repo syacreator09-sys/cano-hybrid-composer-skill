@@ -1,0 +1,36 @@
+{
+  "frame_count": 360,
+  "exact_adjacent_duplicates": [],
+  "low_motion_pairs_lt_0_18": 188,
+  "very_low_motion_pairs_lt_0_08": 64,
+  "mean_frame_diff": 0.45931164955092507,
+  "min_diff": [
+    11,
+    12,
+    0.027847222983837128
+  ],
+  "max_diff": [
+    160,
+    161,
+    3.1003124713897705
+  ],
+  "critical_165_166": 1.0720138549804688,
+  "critical_259_260": 1.2727950811386108,
+  "v1_1_baseline": {
+    "low_motion_pairs_lt_0_18": 197,
+    "very_low_motion_pairs_lt_0_08": 157,
+    "mean_frame_diff": 0.5019537788740565,
+    "max_diff": [
+      165,
+      166,
+      11.551961898803711
+    ]
+  },
+  "notes": [
+    "V1.1 camera discontinuity at frames 165→166 removed",
+    "second camera reset around frames 259→260 converted to continuous interpolation",
+    "AI node moved fully inside workflow canvas",
+    "phase chip raised above browser/camera layer",
+    "final success state remains solid through final frame"
+  ]
+}
