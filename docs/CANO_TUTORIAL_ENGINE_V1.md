@@ -205,3 +205,29 @@ The three supported adapters are:
 - Workflow → code-first deterministic workflow source.
 
 See `docs/MODE_BUILDER_V1.md`.
+
+
+## QA Runner V1
+
+After Mode Builder creates project source, QA Runner renders and audits the deterministic visual master:
+
+```bash
+cano-tutorial qa .runtime/tutorial-engine/jobs/<projectId>
+```
+
+It produces:
+
+- all 720×1280 deterministic frames;
+- adjacent-frame motion metrics;
+- exact duplicate detection;
+- hard-transition detection;
+- keyframe geometry audits;
+- half-second contact sheet;
+- strongest-transition sheet;
+- automated PASS/FAIL report.
+
+An automated pass sets `visualQaPassed = true`, but `visualApproved` stays false until human review.
+
+The QA runner calls no external providers and spends no generation credits.
+
+See `docs/QA_RUNNER_V1.md`.
