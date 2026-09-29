@@ -13,6 +13,42 @@
     "logos": [
       "n8n",
       "WhatsApp"
+    ],
+    "kicker": "CANO DIGITAL · SCREEN TUTORIAL",
+    "titleLine1": "WhatsApp → n8n",
+    "titleAccent": "paso a paso",
+    "subtitle": "Conecta el mensaje, configura el Webhook y prueba el flujo.",
+    "browserUrl": "https://app.n8n.io/workflow/ventas",
+    "workflowName": "Workflows / Leads WhatsApp",
+    "startNode": {
+      "name": "WhatsApp",
+      "meta": "Trigger"
+    },
+    "targetNode": {
+      "name": "Webhook",
+      "meta": "POST /lead",
+      "searchTerm": "Webhook"
+    },
+    "nextNode": {
+      "name": "Agente IA",
+      "meta": "Extrae datos"
+    },
+    "config": {
+      "title": "Webhook",
+      "method": "POST",
+      "path": "lead-whatsapp",
+      "response": "Immediately",
+      "testButton": "Listen for test event"
+    },
+    "success": {
+      "title": "Mensaje recibido",
+      "body": "Payload capturado y enviado al flujo."
+    },
+    "captions": [
+      "1. Abre tu workflow",
+      "2. Añade un Webhook",
+      "3. Configura el endpoint",
+      "4. Envía un mensaje de prueba"
     ]
   }
 }
