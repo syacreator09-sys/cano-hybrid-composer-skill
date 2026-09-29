@@ -1,8 +1,9 @@
 import { spawn } from 'node:child_process';
 import { access, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
-import { findChromiumExecutable, chromiumUserDataDir, platformLabel } from './chromium.js';
+import { fileURLToPath } from 'node:url';
+import { findChromiumExecutable, platformLabel } from './chromium.js';
+import { findPythonRuntime } from './python.js';
 import { composeSheet, fileSha256, meanFrameDiff, readPng, resizeNearest, writePng } from './png.js';
 
 const RUNNER='CANO QA Runner V1';
@@ -10,6 +11,7 @@ const VERSION='1.0';
 const MARKER='.cano-qa-run.json';
 const STAGE={width:720,height:1280};
 const HARD_JUMP_THRESHOLD=8;
+const DRIVER_PATH=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../../../scripts/tutorial_qa_driver.py');
 
 async function exists(target){try{await access(target);return true}catch{return false}}
 async function readJson(file){return JSON.parse(await readFile(file,'utf8'))}
@@ -20,61 +22,19 @@ function frameName(frame,total){
   return `frame_${String(frame).padStart(digits,'0')}.png`;
 }
 
-function bootstrapHtml(html){
-  const bootstrap=`
-<script id="cano-qa-bootstrap">
-(()=>{
-  const p=new URLSearchParams(location.search);
-  const frame=Number(p.get('frame')||0);
-  if(typeof window.renderAt!=='function') throw new Error('window.renderAt(frame) unavailable');
-  window.renderAt(frame);
-  document.documentElement.dataset.canoQaFrame=String(frame);
-  if(p.get('audit')==='1'){
-    const payload=typeof window.audit==='function'?window.audit():{error:'window.audit() unavailable'};
-    const pre=document.createElement('pre');
-    pre.id='canoQaAudit';
-    pre.dataset.payload=btoa(JSON.stringify(payload));
-    pre.style.display='none';
-    document.body.appendChild(pre);
-  }
-})();
-</script>`;
-  const index=html.lastIndexOf('</body>');
-  if(index<0) throw new Error('project HTML missing </body>');
-  return html.slice(0,index)+bootstrap+html.slice(index);
-}
-
-function chromiumArgs({profileDir,url,screenshot=null,dumpDom=false,noSandbox=false}){
-  const args=[
-    '--headless=new',
-    '--disable-gpu',
-    '--hide-scrollbars',
-    '--force-device-scale-factor=1',
-    '--run-all-compositor-stages-before-draw',
-    '--virtual-time-budget=180',
-    `--window-size=${STAGE.width},${STAGE.height}`,
-    `--user-data-dir=${profileDir}`
-  ];
-  if(noSandbox) args.push('--no-sandbox');
-  if(screenshot) args.push(`--screenshot=${screenshot}`);
-  if(dumpDom) args.push('--dump-dom');
-  args.push(url);
-  return args;
-}
-
-function runProcess(command,args,{timeoutMs=30000}={}){
+function runProcess(command,args,{timeoutMs=900000}={}){
   return new Promise((resolve,reject)=>{
-    const child=spawn(command,args,{stdio:['ignore','pipe','pipe']});
+    const child=spawn(command,args,{stdio:['ignore','pipe','pipe'],windowsHide:true});
     let stdout='',stderr='';
     child.stdout.setEncoding('utf8');child.stderr.setEncoding('utf8');
     child.stdout.on('data',d=>{stdout+=d});
     child.stderr.on('data',d=>{stderr+=d});
-    const timer=setTimeout(()=>{child.kill('SIGKILL');reject(new Error(`Chromium timeout after ${timeoutMs}ms`))},timeoutMs);
+    const timer=setTimeout(()=>{child.kill('SIGKILL');reject(new Error(`QA driver timeout after ${timeoutMs}ms`))},timeoutMs);
     child.on('error',error=>{clearTimeout(timer);reject(error)});
     child.on('close',code=>{
       clearTimeout(timer);
       if(code===0) resolve({stdout,stderr});
-      else reject(new Error(`Chromium exited with code ${code}: ${stderr.slice(-1200)}`));
+      else reject(new Error(`QA driver exited with code ${code}: ${stderr.slice(-1600)}`));
     });
   });
 }
@@ -142,47 +102,6 @@ function inspectGeometry(audit,mode,frame){
   return violations;
 }
 
-async function renderOne({chromium,htmlUrl,framesDir,profilesDir,frame,total,worker,noSandbox}){
-  const url=new URL(htmlUrl);url.searchParams.set('frame',String(frame));
-  const file=path.join(framesDir,frameName(frame,total));
-  await mkdir(path.dirname(file),{recursive:true});
-  await mkdir(chromiumUserDataDir(profilesDir,worker),{recursive:true});
-  await runProcess(chromium,chromiumArgs({
-    profileDir:chromiumUserDataDir(profilesDir,worker),
-    url:url.href,
-    screenshot:file,
-    noSandbox
-  }));
-  if(!(await exists(file))) throw new Error(`Chromium did not create frame ${frame}`);
-  return file;
-}
-
-async function renderAllFrames(context){
-  let next=0;
-  const workers=Array.from({length:context.workers},(_,worker)=>(async()=>{
-    while(true){
-      const frame=next++;
-      if(frame>=context.plan.frames)return;
-      await renderOne({...context,frame,worker,total:context.plan.frames});
-    }
-  })());
-  await Promise.all(workers);
-}
-
-async function auditFrame({chromium,htmlUrl,profilesDir,frame,worker,noSandbox}){
-  const url=new URL(htmlUrl);url.searchParams.set('frame',String(frame));url.searchParams.set('audit','1');
-  await mkdir(chromiumUserDataDir(profilesDir,worker),{recursive:true});
-  const result=await runProcess(chromium,chromiumArgs({
-    profileDir:chromiumUserDataDir(profilesDir,worker),
-    url:url.href,
-    dumpDom:true,
-    noSandbox
-  }));
-  const match=result.stdout.match(/<pre id="canoQaAudit" data-payload="([^"]+)"/);
-  if(!match) return {error:'audit payload missing'};
-  return JSON.parse(Buffer.from(match[1],'base64').toString('utf8'));
-}
-
 async function calculateMetrics(framesDir,plan){
   const diffs=[],hashes=[];
   let previous=null;
@@ -193,17 +112,16 @@ async function calculateMetrics(framesDir,plan){
       throw new Error(`unexpected frame dimensions at ${frame}: ${image.width}x${image.height}`);
     }
     hashes.push(await fileSha256(file));
-    if(previous){
-      diffs.push({a:frame-1,b:frame,diff:meanFrameDiff(previous,image,4)});
-    }
+    if(previous) diffs.push({a:frame-1,b:frame,diff:meanFrameDiff(previous,image,4)});
     previous=image;
   }
+
   const exactAdjacentDuplicates=[];
   for(let i=1;i<hashes.length;i++) if(hashes[i]===hashes[i-1]) exactAdjacentDuplicates.push([i-1,i]);
-
   const ordered=[...diffs].sort((a,b)=>b.diff-a.diff);
   const min=[...diffs].sort((a,b)=>a.diff-b.diff)[0]??null;
   const max=ordered[0]??null;
+
   return {
     frameCount:plan.frames,
     exactAdjacentDuplicates,
@@ -238,11 +156,7 @@ async function updateState(workspace,passed,artifacts){
 
   const renderPath=path.join(workspace,'render','render-plan.json');
   const render=await readJson(renderPath);
-  await writeJson(renderPath,{
-    ...render,
-    status:passed?'qa-auto-passed':'qa-failed',
-    qaArtifacts:artifacts
-  });
+  await writeJson(renderPath,{...render,status:passed?'qa-auto-passed':'qa-failed',qaArtifacts:artifacts});
 
   const qaPlanPath=path.join(workspace,'qa','qa-plan.json');
   const qaPlan=await readJson(qaPlanPath);
@@ -259,6 +173,7 @@ export async function runQa(workspaceDir,options={}){
 
   const source=path.join(workspace,'source','project','index.html');
   if(!(await exists(source))) throw new Error(`project source missing: ${source}`);
+  if(!(await exists(DRIVER_PATH))) throw new Error(`QA driver missing: ${DRIVER_PATH}`);
 
   const outputDir=path.join(workspace,'qa','run-v1');
   await guardOutput(outputDir,workspace,Boolean(options.force));
@@ -266,24 +181,38 @@ export async function runQa(workspaceDir,options={}){
   await writeJson(path.join(outputDir,MARKER),{runner:RUNNER,version:VERSION,workspace});
 
   const chromium=await findChromiumExecutable(options.chromiumPath);
-  const workers=Math.max(1,Math.min(8,Number(options.workers)||4));
-  const noSandbox=options.noSandbox===true||(typeof process.getuid==='function'&&process.getuid()===0);
-  const projectHtml=await readFile(source,'utf8');
-  const qaHtml=path.join(outputDir,'qa-frame.html');
-  await writeFile(qaHtml,bootstrapHtml(projectHtml),'utf8');
-  const htmlUrl=pathToFileURL(qaHtml).href;
+  const python=findPythonRuntime(options.pythonPath);
   const framesDir=path.join(outputDir,'frames');
-  const profilesDir=path.join(outputDir,'.chromium');
+  const auditOut=path.join(outputDir,'driver-audit.json');
+  const configPath=path.join(outputDir,'driver-config.json');
+  const keyframes=keyframesFromStoryboard(storyboard,plan);
+  const noSandbox=options.noSandbox===true||(typeof process.getuid==='function'&&process.getuid()===0);
 
-  await renderAllFrames({chromium,htmlUrl,framesDir,profilesDir,plan,workers,noSandbox});
+  await writeJson(configPath,{
+    html:source,
+    framesDir,
+    auditOut,
+    frames:plan.frames,
+    width:STAGE.width,
+    height:STAGE.height,
+    keyframes,
+    chromiumPath:chromium,
+    launchArgs:noSandbox?['--no-sandbox','--disable-gpu']:['--disable-gpu']
+  });
+
+  await runProcess(
+    python.command,
+    [...python.prefixArgs,DRIVER_PATH,'--config',configPath],
+    {timeoutMs:Number(options.timeoutMs)||900000}
+  );
+
+  const driverAudit=await readJson(auditOut);
   const metrics=await calculateMetrics(framesDir,plan);
   await writeJson(path.join(outputDir,'qa_metrics.json'),metrics);
 
-  const keyframes=keyframesFromStoryboard(storyboard,plan);
   const geometry=[];
-  for(let i=0;i<keyframes.length;i++){
-    const frame=keyframes[i];
-    const audit=await auditFrame({chromium,htmlUrl,profilesDir,frame,worker:i%workers,noSandbox});
+  for(const frame of keyframes){
+    const audit=driverAudit.audits?.[String(frame)]??{error:'audit missing'};
     const violations=inspectGeometry(audit,plan.mode,frame);
     geometry.push({frame,audit,violations});
   }
@@ -301,9 +230,7 @@ export async function runQa(workspaceDir,options={}){
   await buildSheet(framesDir,plan,contacts,contactPath,5);
 
   const transitionFrames=[];
-  for(const item of metrics.topTransitions.slice(0,6)){
-    transitionFrames.push(item.a,item.b);
-  }
+  for(const item of metrics.topTransitions.slice(0,6)) transitionFrames.push(item.a,item.b);
   const uniqueTransitions=[...new Set(transitionFrames)];
   const transitionsPath=path.join(outputDir,'transitions_sheet.png');
   await buildSheet(framesDir,plan,uniqueTransitions.length?uniqueTransitions:[0,plan.frames-1],transitionsPath,6);
@@ -331,7 +258,8 @@ export async function runQa(workspaceDir,options={}){
     status:passed?'AUTO_PASS':'FAIL',
     manualVisualApprovalRequired:true,
     visualApproved:false,
-    browser:{executable:path.basename(chromium),platform:platformLabel(),workers},
+    driver:'python-playwright',
+    browser:{executable:path.basename(chromium),version:driverAudit.browserVersion??null,platform:platformLabel()},
     thresholds:{hardJump:HARD_JUMP_THRESHOLD,maxExactAdjacentDuplicates:maxDup},
     failures,
     metrics,
@@ -341,8 +269,7 @@ export async function runQa(workspaceDir,options={}){
     externalSpend:0
   };
   await writeJson(path.join(outputDir,'qa-report.json'),report);
-  await rm(profilesDir,{recursive:true,force:true});
-  await rm(qaHtml,{force:true});
+  await rm(configPath,{force:true});
   const nextState=await updateState(workspace,passed,artifacts);
   return {workspace,outputDir,report,state:nextState};
 }
