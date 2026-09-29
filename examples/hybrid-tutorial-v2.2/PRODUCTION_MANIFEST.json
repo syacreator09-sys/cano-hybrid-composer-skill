@@ -1,0 +1,100 @@
+{
+  "project": "CANO Hybrid Tutorial V2.2",
+  "status": "APPROVED MOTION PASS",
+  "base": "V2.1 approved composition",
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 24,
+    "frames": 288,
+    "duration_seconds": 12,
+    "codec": "H.264",
+    "audio": false
+  },
+  "composition_locked": true,
+  "motion": [
+    "background drift",
+    "hero push",
+    "AI one-pass orbit",
+    "data stagger",
+    "handoff dot",
+    "animated connectors",
+    "CRM activation",
+    "calendar activation",
+    "confirmation cascade"
+  ],
+  "hashes": {
+    "mp4": "c526ada7c9b746ef70d9383462944f9f2e862379cc183546b5b1c2c595c5f8aa",
+    "index_html": "ea9c8db0d9de2ecc1318c31eb5ff8a4a2ead4080a6cb00e245c14ba72f36b2c5"
+  },
+  "qa": {
+    "frame_count": 288,
+    "exact_adjacent_duplicates": [],
+    "low_motion_pairs_lt_0_18": 144,
+    "very_low_motion_pairs_lt_0_08": 21,
+    "longest_low_motion_runs": [
+      [
+        176,
+        214
+      ],
+      [
+        89,
+        120
+      ],
+      [
+        121,
+        139
+      ],
+      [
+        159,
+        174
+      ],
+      [
+        9,
+        17
+      ],
+      [
+        279,
+        285
+      ],
+      [
+        65,
+        70
+      ],
+      [
+        233,
+        236
+      ],
+      [
+        274,
+        277
+      ],
+      [
+        248,
+        250
+      ]
+    ],
+    "min_diff": [
+      11,
+      12,
+      0.060034722089767456
+    ],
+    "mean_diff": 0.3918067071366185,
+    "max_diff": [
+      220,
+      221,
+      2.8288888931274414
+    ],
+    "v2_1_baseline": {
+      "low_motion_pairs_lt_0_18": 202,
+      "very_low_motion_pairs_lt_0_08": 167,
+      "mean_diff": 0.26705453929539297
+    },
+    "improvement": {
+      "low_motion_pairs_delta": -58,
+      "very_low_motion_pairs_delta": -146,
+      "mean_diff_delta": 0.12475216784122556
+    }
+  },
+  "binary_note": "The GitHub connector cannot upload the MP4 binary. V2.2 is reproducible from V2.1 + this patch."
+}
