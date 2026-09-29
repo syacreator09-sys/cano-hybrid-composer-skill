@@ -225,3 +225,16 @@ cano-tutorial qa .runtime/tutorial-engine/jobs/<projectId>
 QA Runner V1 uses local Chromium + Python Playwright, blocks external HTTP/HTTPS requests, checks exact frame count, adjacent duplicates, transition density and critical geometry, and writes contact/transition sheets under `.runtime/`. Automated QA never grants human visual approval and never activates audio or publishing.
 
 See [QA Runner V1](docs/QA_RUNNER_V1.md).
+
+
+## Render Runner V1
+
+After automated visual QA passes, encode the exact reviewed PNG sequence into a silent H.264 master:
+
+```bash
+cano-tutorial render .runtime/tutorial-engine/jobs/<projectId>
+```
+
+Render Runner V1 does **not** reopen the HTML or create a second animation sequence. It hashes the QA frame sequence, encodes those frames locally with FFmpeg, verifies codec/resolution/FPS/frame count/no-audio with ffprobe, and leaves `visualApproved=false` for the human approval gate.
+
+See [Render Runner V1](docs/RENDER_RUNNER_V1.md).
