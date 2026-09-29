@@ -134,3 +134,13 @@ The current approved production method is **V2.2**.
 - [V2.2 golden checkpoint](examples/hybrid-tutorial-v2.2/GOLDEN_CHECKPOINT.md)
 
 Future tutorial work should start from these files instead of reconstructing the format from memory.
+
+
+## CANO Screen Tutorial Mode
+
+The third production mode is now frozen as a stable example:
+
+- [Screen Tutorial Mode V1](docs/CANO_SCREEN_TUTORIAL_MODE.md)
+- [Approved Test 3](examples/screen-tutorial-test3/)
+
+It supports cursor, clicks, zoom/pan, highlights, application-state changes and real SVG/PNG brand logos.
