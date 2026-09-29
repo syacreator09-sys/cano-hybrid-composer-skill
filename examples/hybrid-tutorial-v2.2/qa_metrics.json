@@ -1,0 +1,69 @@
+{
+  "frame_count": 288,
+  "exact_adjacent_duplicates": [],
+  "low_motion_pairs_lt_0_18": 144,
+  "very_low_motion_pairs_lt_0_08": 21,
+  "longest_low_motion_runs": [
+    [
+      176,
+      214
+    ],
+    [
+      89,
+      120
+    ],
+    [
+      121,
+      139
+    ],
+    [
+      159,
+      174
+    ],
+    [
+      9,
+      17
+    ],
+    [
+      279,
+      285
+    ],
+    [
+      65,
+      70
+    ],
+    [
+      233,
+      236
+    ],
+    [
+      274,
+      277
+    ],
+    [
+      248,
+      250
+    ]
+  ],
+  "min_diff": [
+    11,
+    12,
+    0.060034722089767456
+  ],
+  "mean_diff": 0.3918067071366185,
+  "max_diff": [
+    220,
+    221,
+    2.8288888931274414
+  ],
+  "v2_1_baseline": {
+    "low_motion_pairs_lt_0_18": 202,
+    "very_low_motion_pairs_lt_0_08": 167,
+    "mean_diff": 0.26705453929539297
+  },
+  "improvement": {
+    "low_motion_pairs_delta": -58,
+    "very_low_motion_pairs_delta": -146,
+    "mean_diff_delta": 0.12475216784122556
+  }
+}
