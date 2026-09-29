@@ -1,6 +1,6 @@
-# CANO Screen Tutorial Mode V1
+# CANO Screen Tutorial Mode V1.2
 
-**Status: APPROVED / STABLE**
+**Status: APPROVED / STABLE — V1.2 TECHNICAL BASELINE**
 
 This mode extends the CANO Tutorial Engine from explainer/workflow videos into software walkthroughs.
 
@@ -133,3 +133,21 @@ Approved example:
 - `examples/screen-tutorial-logos-v1.1/`
 
 The logo layer is treated as an asset layer. Cursor, zoom, clicks, labels, state changes and QA remain code-driven.
+
+
+## Technical baseline — V1.2
+
+Frame-level QA of Logos V1.1 exposed two discontinuous camera resets and one workflow-node overflow.
+
+V1.2 fixes those issues without changing the approved design language or real-logo architecture.
+
+Key QA improvement:
+- camera jump at frames 165→166: **11.552 → 1.072**
+- maximum adjacent-frame difference: **11.552 → 3.100**
+- very-low-motion pairs: **157 → 64**
+- exact adjacent duplicates: **0**
+
+Current baseline:
+- `examples/screen-tutorial-v1.2/`
+
+Use V1.2 for future screen tutorials. Do not reopen the composition unless a real production example demonstrates a limitation.
