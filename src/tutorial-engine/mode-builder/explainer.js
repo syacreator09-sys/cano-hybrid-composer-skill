@@ -54,7 +54,7 @@ function applyContent(html,content,plan) {
   html=replaceRequired(html,'CRM + Calendar sincronizados',escapeHtml(content.result.footer),'explainer result footer');
 
   html=replaceRequired(html,'const FPS=24,DUR=12;','const FPS='+Number(plan.fps)+',DUR='+Number(plan.durationSeconds)+',BASE_DUR=12;','explainer fps duration');
-  html=replaceRequired(html,'function renderAt(frame){const t=frame/FPS;','function renderAt(frame){const rt=frame/FPS,t=rt*(BASE_DUR/DUR);','explainer time scaling');
+  html=replaceRequired(html,'function renderAt(frame){const t=frame/FPS;','function renderAt(frame){const rt=frame/FPS,t=rt*(BASE_DUR/DUR);','explainer time scaling');\n  html=replaceRequired(html,'const globalP=clamp(t/DUR);','const globalP=clamp(rt/DUR);','explainer progress scaling');
 
   const phases=['"01 · MENSAJE"','"02 · COMPRENDE"','"03 · DECIDE Y ACTÚA"','"04 · CONFIRMA"'];
   const caps=['"1. El cliente escribe"','"2. La IA entiende el mensaje"','"3. Consulta CRM y agenda"','"4. Confirma y sincroniza"'];
