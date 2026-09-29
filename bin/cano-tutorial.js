@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import process from 'node:process';
 import {
+  buildModeSource,
   buildProductionWorkspace,
   compileTutorialPlan,
   inspectProductionWorkspace,
@@ -11,7 +12,7 @@ import {
   validateTutorialManifest
 } from '../src/tutorial-engine/index.js';
 
-const VERSION = '1.1.0';
+const VERSION = '1.2.0';
 const PACKAGE_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const HELP = `CANO Tutorial Engine ${VERSION}
 
@@ -20,11 +21,13 @@ Usage:
   cano-tutorial validate <manifest.json>
   cano-tutorial plan <manifest.json>
   cano-tutorial build <manifest.json> [--out directory] [--force] [--no-baseline]
+  cano-tutorial source <workspace-directory> [--force]
   cano-tutorial status <workspace-directory>
   cano-tutorial --help | --version
 
-Production Runner V1 creates a deterministic local workspace only.
-It does not render media, publish content or call paid/external providers.`;
+Production Runner V1 creates the local workspace.
+Mode Builder V1 turns that workspace into deterministic project HTML/JS.
+Neither command calls paid/external providers or publishes content.`;
 
 function optionValue(args, name, fallback = null) {
   const index = args.indexOf(name);
@@ -95,6 +98,21 @@ async function main() {
       mode:result.plan.mode,
       baseline:result.plan.baseline,
       frames:result.plan.frames
+    }, null, 2));
+    return;
+  }
+
+  if (cmd === 'source') {
+    const workspace = args[1];
+    if (!workspace) throw new Error('workspace directory is required');
+    const result = await buildModeSource(workspace,{force:args.includes('--force')});
+    console.log(JSON.stringify({
+      status:'SOURCE_BUILT',
+      workspace:result.workspace,
+      mode:result.report.mode,
+      indexHtml:result.indexHtml,
+      providerCalls:result.report.providerCalls,
+      externalSpend:result.report.externalSpend
     }, null, 2));
     return;
   }
