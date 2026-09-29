@@ -5,19 +5,55 @@
   "type": "module",
   "description": "Clone-ready hybrid video composer with deterministic timelines and an opt-in local FFmpeg renderer.",
   "license": "MIT",
-  "engines": {"node": ">=20"},
-  "keywords": ["ffmpeg", "remotion", "video-composition", "tutorial", "avatar", "playwright"],
-  "repository": {"type":"git","url":"https://github.com/syacreator09-sys/cano-hybrid-composer-skill.git"},
-  "scripts": {
-    "test":"node --test",
-    "check":"node scripts/check-syntax.mjs",
-    "audit:release":"node scripts/audit-release.mjs",
-    "verify":"npm test && npm run check && npm run audit:release",
-    "doctor":"node bin/cano-compose.js doctor",
-    "init":"node bin/cano-compose.js init",
-    "smoke":"node bin/cano-compose.js render examples/avatar-screen-short.json --mock",
-    "prepublishOnly":"npm run verify"
+  "engines": {
+    "node": ">=20"
   },
-  "bin":{"cano-compose":"bin/cano-compose.js"},
-  "files":["bin","src","schemas","scripts","docs","examples","themes","SKILL.md","AGENTS.md","CLAUDE.md","SECURITY.md","PRIVACY.md","USAGE_POLICY.md","BRAND_AND_IDENTITY.md","THIRD_PARTY_NOTICES.md","LICENSE","README.md"]
+  "keywords": [
+    "ffmpeg",
+    "remotion",
+    "video-composition",
+    "tutorial",
+    "avatar",
+    "playwright",
+    "tutorial-engine",
+    "motion-graphics"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/syacreator09-sys/cano-hybrid-composer-skill.git"
+  },
+  "scripts": {
+    "test": "node --test",
+    "check": "node scripts/check-syntax.mjs",
+    "audit:release": "node scripts/audit-release.mjs",
+    "verify": "npm test && npm run check && npm run audit:release",
+    "doctor": "node bin/cano-compose.js doctor",
+    "init": "node bin/cano-compose.js init",
+    "smoke": "node bin/cano-compose.js render examples/avatar-screen-short.json --mock",
+    "prepublishOnly": "npm run verify",
+    "tutorial:screen": "node bin/cano-tutorial.js plan examples/tutorial-engine-v1/screen-tutorial.json"
+  },
+  "bin": {
+    "cano-compose": "bin/cano-compose.js",
+    "cano-tutorial": "bin/cano-tutorial.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "schemas",
+    "scripts",
+    "docs",
+    "examples",
+    "themes",
+    "SKILL.md",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "SECURITY.md",
+    "PRIVACY.md",
+    "USAGE_POLICY.md",
+    "BRAND_AND_IDENTITY.md",
+    "THIRD_PARTY_NOTICES.md",
+    "LICENSE",
+    "README.md"
+  ]
 }
