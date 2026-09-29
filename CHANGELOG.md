@@ -5,6 +5,7 @@
 - Added QA Runner V1 for deterministic full-frame visual QA.
 - Added dependency-free PNG decoding, luminance-diff metrics, scaling and contact-sheet composition.
 - Added portable local Chromium/Chrome discovery for Windows, macOS and Linux.
+- Added Playwright-aware Python runtime discovery and a single-browser Python Playwright frame driver.
 - Added exact duplicate detection, hard-jump detection and keyframe geometry audits.
 - Added contact and strongest-transition sheets while preserving all QA-reviewed frames for the render stage.
 - Added `cano-tutorial qa` with guarded rebuilds and automated production-state transitions.
