@@ -101,3 +101,10 @@ Render Runner V1 makes:
 - **0 publishing actions**
 
 FFmpeg and ffprobe run locally and only on QA-approved workspace files.
+
+
+## Next layer
+
+The next boundary is **Visual Approval Gate V1**. Automated rendering never grants human approval.
+
+See [Visual Approval Gate V1](VISUAL_APPROVAL_GATE_V1.md).

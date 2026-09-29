@@ -4,17 +4,19 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import process from 'node:process';
 import {
+  approveVisualMaster,
   buildModeSource,
   buildProductionWorkspace,
   compileTutorialPlan,
   inspectProductionWorkspace,
+  inspectVisualApproval,
   routeTutorialBrief,
   runQa,
   runRender,
   validateTutorialManifest
 } from '../src/tutorial-engine/index.js';
 
-const VERSION = '1.4.0';
+const VERSION = '1.5.0';
 const PACKAGE_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const HELP = `CANO Tutorial Engine ${VERSION}
 
@@ -26,6 +28,8 @@ Usage:
   cano-tutorial source <workspace-directory> [--force]
   cano-tutorial qa <workspace-directory> [--chromium path] [--python path] [--force]
   cano-tutorial render <workspace-directory> [--ffmpeg path] [--ffprobe path] [--crf number] [--preset name] [--force]
+  cano-tutorial approve <workspace-directory> --sha256 <master-sha256> --reviewer <name> [--note text]
+  cano-tutorial approval-status <workspace-directory>
   cano-tutorial status <workspace-directory>
   cano-tutorial --help | --version
 
@@ -33,6 +37,7 @@ Production Runner V1 creates the local workspace.
 Mode Builder V1 turns that workspace into deterministic project HTML/JS.
 QA Runner V1 renders and audits every deterministic frame through Python Playwright + local Chromium.
 Render Runner V1 encodes only QA-approved frames into a local silent H.264 master.
+Visual Approval Gate V1 records an explicit human approval tied to the exact silent-master SHA-256.
 These commands do not call paid/external providers or publish content.`;
 
 function optionValue(args, name, fallback = null) {
@@ -42,7 +47,7 @@ function optionValue(args, name, fallback = null) {
 
 function positionalAfterCommand(args) {
   const result = [];
-  const valued = new Set(['--mode','--out','--chromium','--python','--ffmpeg','--ffprobe','--crf','--preset']);
+  const valued = new Set(['--mode','--out','--chromium','--python','--ffmpeg','--ffprobe','--crf','--preset','--sha256','--reviewer','--note']);
   for (let i = 1; i < args.length; i += 1) {
     if (valued.has(args[i])) { i += 1; continue; }
     if (args[i].startsWith('--')) continue;
@@ -169,6 +174,39 @@ async function main() {
       resolution:`${result.report.probe.width}x${result.report.probe.height}`,
       audioStreams:result.report.probe.audioStreams,
       visualApproved:result.report.visualApproved
+    }, null, 2));
+    return;
+  }
+
+  if (cmd === 'approve') {
+    const workspace = args[1];
+    if (!workspace) throw new Error('workspace directory is required');
+    const result = await approveVisualMaster(workspace,{
+      expectedSha256:optionValue(args,'--sha256'),
+      reviewer:optionValue(args,'--reviewer'),
+      note:optionValue(args,'--note')
+    });
+    console.log(JSON.stringify({
+      status:'VISUAL_APPROVED',
+      workspace:result.workspace,
+      approval:'approval/visual-approval.json',
+      masterSha256:result.approval.master.sha256,
+      reviewer:result.approval.reviewer,
+      approvedAt:result.approval.approvedAt,
+      audioPlanStatus:result.audioPlan.status,
+      audioReady:result.state.gates.audioReady,
+      publicationMasterReady:result.state.gates.publicationMasterReady
+    }, null, 2));
+    return;
+  }
+
+  if (cmd === 'approval-status') {
+    const workspace = args[1];
+    if (!workspace) throw new Error('workspace directory is required');
+    const result=await inspectVisualApproval(workspace);
+    console.log(JSON.stringify({
+      approved:result.approved,
+      approval:result.approval
     }, null, 2));
     return;
   }
