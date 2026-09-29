@@ -31,7 +31,8 @@
     "init": "node bin/cano-compose.js init",
     "smoke": "node bin/cano-compose.js render examples/avatar-screen-short.json --mock",
     "prepublishOnly": "npm run verify",
-    "tutorial:screen": "node bin/cano-tutorial.js plan examples/tutorial-engine-v1/screen-tutorial.json"
+    "tutorial:screen": "node bin/cano-tutorial.js plan examples/tutorial-engine-v1/screen-tutorial.json",
+    "tutorial:build": "node bin/cano-tutorial.js build examples/tutorial-engine-v1/screen-tutorial.json"
   },
   "bin": {
     "cano-compose": "bin/cano-compose.js",

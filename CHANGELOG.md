@@ -2,6 +2,12 @@
 
 ## Unreleased — Tutorial Engine V1
 
+- Added Production Runner V1 for safe local production workspaces.
+- Added baseline materialization with SHA-256 integrity locks.
+- Added mode-specific storyboard and asset/logo slot scaffolds.
+- Added QA, render and audio-gate plans.
+- Added safe --force rebuild protection and workspace status/integrity inspection.
+
 - Added a deterministic router for Explainer, Workflow and Screen Tutorial modes.
 - Added a tutorial manifest compiler with output, safe-zone, asset, audio and QA policies.
 - Added the `cano-tutorial` planning CLI.
