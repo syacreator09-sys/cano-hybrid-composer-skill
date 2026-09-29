@@ -23,33 +23,36 @@ source/project/index.html
 cano-tutorial qa .runtime/tutorial-engine/jobs/<projectId>
 ```
 
-Optional controls:
+Optional paths:
 
 ```bash
-cano-tutorial qa <workspace> --workers 4
 cano-tutorial qa <workspace> --chromium /path/to/chromium
+cano-tutorial qa <workspace> --python /path/to/python
 cano-tutorial qa <workspace> --force
 ```
 
-You may also set:
+Environment equivalents:
 
 ```text
 CANO_CHROMIUM_PATH=/path/to/chromium
+CANO_PYTHON_PATH=/path/to/python
 ```
 
-## Browser strategy
+## Runtime
 
-QA Runner V1 intentionally does not depend on Playwright or Puppeteer.
+QA uses one local headless Chromium/Chrome process controlled by Python Playwright.
 
-It launches the locally installed Chromium/Chrome executable in headless mode for each deterministic frame. This keeps the repository portable and avoids browser-download dependencies.
+Install the Python package when needed:
 
-The runner detects common Chromium/Chrome locations on:
+```bash
+python -m pip install playwright
+```
 
-- Windows
-- macOS
-- Linux
+A separate Playwright browser download is not required when a compatible local Chrome/Chromium executable is available.
 
-No external provider is called.
+The generated CANO HTML is loaded with `page.set_content()` rather than `file://`, avoiding managed-environment file URL restrictions.
+
+No generative or paid provider is called.
 
 ## Output
 
@@ -60,6 +63,7 @@ qa/run-v1/
 │   ├── frame_0000.png
 │   ├── frame_0001.png
 │   └── ...
+├── driver-audit.json
 ├── qa_metrics.json
 ├── geometry_audit.json
 ├── contact_sheet.png
@@ -67,7 +71,7 @@ qa/run-v1/
 └── qa-report.json
 ```
 
-All frames are preserved so Render Runner V1 can encode the exact QA-reviewed sequence instead of rendering a second, potentially different sequence.
+All frames are preserved so Render Runner V1 can encode the exact QA-reviewed sequence instead of rendering a second sequence.
 
 ## Temporal metrics
 
@@ -86,19 +90,15 @@ The comparison samples the 720×1280 internal stage at 4-pixel intervals, matchi
 
 ## Geometry audit
 
-At storyboard boundaries, midpoints and transition-adjacent keyframes, the runner calls:
+At storyboard boundaries, midpoints and transition-adjacent keyframes, the browser evaluates:
 
 ```js
 window.audit()
 ```
 
-Critical readable elements are checked for:
+Critical readable elements are checked for stage overflow, invalid geometry and readable-margin violations.
 
-- stage overflow;
-- invalid geometry;
-- readable-margin violations.
-
-Intentional camera crops, cursor movement and zoomed application canvases are not treated as readable-text safe-area failures.
+Intentional camera crops, cursor movement and zoomed application canvases are not treated as readable-text failures.
 
 ## Contact sheets
 
@@ -107,7 +107,7 @@ Two deterministic sheets are produced:
 - `contact_sheet.png`: half-second cadence plus final frame;
 - `transitions_sheet.png`: strongest adjacent-frame transitions.
 
-The PNG parser, scaler and sheet compositor are implemented with Node built-ins only.
+PNG decoding, scaling and contact-sheet composition use Node built-ins only.
 
 ## Automatic gates
 
@@ -128,39 +128,12 @@ visualApproved = false
 
 Human visual approval is still required before audio generation or publication.
 
-## State transition
-
-Before:
-
-```text
-stage = source-built
-sourceReady = true
-visualRendered = false
-```
-
-After AUTO_PASS:
-
-```text
-stage = qa-auto-passed
-visualRendered = true
-visualQaPassed = true
-visualApproved = false
-```
-
-After failure:
-
-```text
-stage = qa-failed
-visualRendered = true
-visualQaPassed = false
-```
-
 ## Provider boundary
 
 QA Runner V1 makes:
 
 - **0 provider calls**
-- **0 external spend**
+- **0 external generation spend**
 - **0 publishing actions**
 
 Audio remains blocked until visual approval.
