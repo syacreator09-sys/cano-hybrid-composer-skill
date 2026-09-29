@@ -149,3 +149,34 @@ cano-tutorial plan examples/tutorial-engine-v1/screen-tutorial.json
 Do not redesign a stable mode just because a new topic appears.
 
 Create a new mode/version only when a production example demonstrates a real limitation that cannot be solved by changing content, assets, cursor path, timing or storyboard.
+
+
+## Production Runner V1
+
+The router/planner can now materialize a deterministic production workspace:
+
+```bash
+cano-tutorial build examples/tutorial-engine-v1/screen-tutorial.json
+```
+
+The runner creates:
+
+- manifest + compiled plan;
+- mode-specific storyboard;
+- asset and real-logo slots;
+- QA plan;
+- silent render plan;
+- audio gate;
+- production state;
+- baseline source bundle;
+- SHA-256 production lock.
+
+Inspect it with:
+
+```bash
+cano-tutorial status .runtime/tutorial-engine/jobs/<projectId>
+```
+
+The runner remains provider-safe: it does not render, publish, or call ElevenLabs. Audio remains blocked until the visual master is approved.
+
+See `docs/PRODUCTION_RUNNER_V1.md`.
