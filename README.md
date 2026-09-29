@@ -212,3 +212,20 @@ Mode Builder V1 supports:
 The generated source lives in `source/project/` and makes no provider calls or external spend.
 
 See [Mode Builder V1](docs/MODE_BUILDER_V1.md).
+
+
+## QA Runner V1
+
+A source-built workspace can now be rendered and audited frame by frame:
+
+```bash
+cano-tutorial qa .runtime/tutorial-engine/jobs/whatsapp-n8n-screen
+```
+
+QA Runner V1 generates every deterministic 720×1280 frame, temporal metrics, geometry audit, contact sheet and strongest-transition sheet. It preserves the rendered frame sequence so the next Render Runner can encode exactly what was reviewed.
+
+No Playwright/Puppeteer dependency is required; the runner uses the local Chromium/Chrome executable.
+
+Automated PASS does not equal publication approval. `visualApproved` remains false until the visual review is explicitly accepted.
+
+See [QA Runner V1](docs/QA_RUNNER_V1.md).
