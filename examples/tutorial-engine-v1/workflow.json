@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "projectId": "whatsapp-n8n-crm-workflow",
+  "brief": "WhatsApp → n8n → IA → CRM: así se mueve y se califica un lead",
+  "mode": "auto",
+  "canvas": "9:16",
+  "durationSeconds": 12,
+  "fps": 24,
+  "audio": { "enabled": false }
+}
