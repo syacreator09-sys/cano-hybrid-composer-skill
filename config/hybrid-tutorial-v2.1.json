@@ -1,0 +1,56 @@
+{
+  "version": "2.1",
+  "status": "approved",
+  "template": "CANO Hybrid Tutorial",
+  "generated_asset_count": {
+    "default": 2,
+    "max_recommended": 3
+  },
+  "ownership": {
+    "image": [
+      "photographic/illustrated protagonists",
+      "depth/texture"
+    ],
+    "html_css": [
+      "all critical readable text",
+      "cards",
+      "popups",
+      "CRM",
+      "calendar",
+      "confirmation"
+    ],
+    "svg": [
+      "connectors",
+      "paths",
+      "flow indicators"
+    ],
+    "javascript": [
+      "timeline",
+      "camera",
+      "lifecycle",
+      "highlights",
+      "handoffs"
+    ],
+    "canvas": [
+      "optional particles/glow/trails"
+    ]
+  },
+  "layout": {
+    "internal_canvas": [
+      720,
+      1280
+    ],
+    "safe_margin": 48,
+    "final_canvas": [
+      1080,
+      1920
+    ],
+    "phases": [
+      "input",
+      "understand",
+      "act",
+      "result"
+    ]
+  },
+  "v2_2_policy": "Preserve composition; improve motion density only."
+}

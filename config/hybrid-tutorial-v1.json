@@ -1,0 +1,56 @@
+{
+  "version": "1.0",
+  "status": "checkpoint-approved",
+  "format": "CANO HYBRID TUTORIAL",
+  "canvas": {
+    "aspectRatio": "9:16",
+    "width": 1080,
+    "height": 1920,
+    "fps": 30
+  },
+  "assetPolicy": {
+    "generatedVisualAssets": {
+      "preferredCount": 2,
+      "maxRecommended": 3
+    },
+    "generatedAssetsMayContainCriticalText": false,
+    "generatedAssetsMayContainProcessArrows": false,
+    "codeOwns": [
+      "titles",
+      "subtitles",
+      "messages",
+      "labels",
+      "popups",
+      "CRM UI",
+      "calendar UI",
+      "connectors",
+      "timing",
+      "camera"
+    ]
+  },
+  "render": {
+    "deterministic": true,
+    "silentMasterFirst": true,
+    "videoGenerativeMotion": false,
+    "audioLayer": "ElevenLabs optional after visual QA"
+  },
+  "qa": {
+    "technical": true,
+    "safeArea": true,
+    "collisions": true,
+    "transitionSampling": true,
+    "holdDetection": true,
+    "lifecycleValidation": true,
+    "visualHierarchy": true
+  },
+  "v2Backlog": [
+    "asset prompt templates",
+    "transparent isolated assets",
+    "layout tokens",
+    "camera grammar",
+    "automated collision/overflow QA",
+    "automated hold detection",
+    "reusable tutorial manifest",
+    "1080x1920 default renderer"
+  ]
+}

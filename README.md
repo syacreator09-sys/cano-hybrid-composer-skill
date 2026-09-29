@@ -111,3 +111,14 @@ cano-compose render composition.json --mock|--live
 - La revisión visual, privacidad, derechos y sincronización continúa siendo humana.
 
 La verificación es local y este repositorio no contiene GitHub Actions.
+
+
+## Approved production example: Hybrid Tutorial V2.1
+
+The approved code-driven tutorial checkpoint lives at:
+
+- [examples/hybrid-tutorial-v2.1](examples/hybrid-tutorial-v2.1/)
+- [V2.1 production manifest](examples/hybrid-tutorial-v2.1/PRODUCTION_MANIFEST.json)
+- [Approved composition notes](docs/CANO_HYBRID_TUTORIAL_V2_1_APPROVED.md)
+
+V2.1 uses **2 generated visual assets + HTML/CSS UI + SVG connectors + deterministic JavaScript motion**. Critical readable text stays in code. No generative video model is used for the motion layer.
