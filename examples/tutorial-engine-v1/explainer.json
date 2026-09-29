@@ -6,5 +6,31 @@
   "canvas": "9:16",
   "durationSeconds": 12,
   "fps": 24,
-  "audio": { "enabled": false }
+  "audio": {
+    "enabled": false
+  },
+  "content": {
+    "titleLine1": "De un mensaje a una",
+    "titleAccent": "cita confirmada",
+    "subtitle": "Un agente de IA convierte conversación en una acción real.",
+    "message": {
+      "eyebrow": "MENSAJE",
+      "copy": "Hola, quiero agendar una cita mañana a las 11.",
+      "meta": "Nuevo mensaje"
+    },
+    "extraction": {
+      "intent": "Reservar",
+      "date": "Mañana",
+      "time": "11:00"
+    },
+    "result": {
+      "title": "Cita confirmada",
+      "body": "La IA reservó el horario, actualizó el CRM y preparó la confirmación.",
+      "date": "Mañana",
+      "time": "11:00 AM",
+      "channel": "Videollamada",
+      "status": "Agendada ✓",
+      "footer": "CRM + Calendar sincronizados"
+    }
+  }
 }
