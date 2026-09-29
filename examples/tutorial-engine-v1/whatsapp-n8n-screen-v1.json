@@ -1,0 +1,78 @@
+{
+  "version": "1.0",
+  "projectId": "whatsapp-n8n-screen-v1",
+  "brief": "Cómo conectar WhatsApp a n8n en 15 segundos",
+  "mode": "screen_tutorial",
+  "canvas": "9:16",
+  "durationSeconds": 15,
+  "fps": 24,
+  "audio": {
+    "enabled": false
+  },
+  "content": {
+    "logos": [
+      "n8n",
+      "WhatsApp"
+    ],
+    "kicker": "CANO DIGITAL · SCREEN TUTORIAL",
+    "titleLine1": "WhatsApp → n8n",
+    "titleAccent": "paso a paso",
+    "subtitle": "Conecta el mensaje, configura el Webhook y prueba el flujo.",
+    "browserUrl": "https://app.n8n.io/workflow/ventas",
+    "workflowName": "Workflows / Leads WhatsApp",
+    "startNode": {
+      "name": "WhatsApp",
+      "meta": "Trigger"
+    },
+    "targetNode": {
+      "name": "Webhook",
+      "meta": "POST /lead",
+      "searchTerm": "Webhook"
+    },
+    "nextNode": {
+      "name": "Agente IA",
+      "meta": "Extrae datos"
+    },
+    "config": {
+      "title": "Webhook",
+      "labels": {
+        "method": "HTTP METHOD",
+        "path": "PATH",
+        "response": "RESPONSE"
+      },
+      "method": "POST",
+      "path": "lead-whatsapp",
+      "response": "Immediately",
+      "testButton": "Listen for test event"
+    },
+    "steps": [
+      {
+        "id": "open",
+        "action": "open",
+        "caption": "Abre tu workflow"
+      },
+      {
+        "id": "webhook",
+        "action": "select",
+        "target": "webhook",
+        "caption": "Añade un Webhook"
+      },
+      {
+        "id": "configure",
+        "action": "configure",
+        "target": "endpoint",
+        "caption": "Configura el endpoint"
+      },
+      {
+        "id": "test",
+        "action": "test",
+        "target": "test-workflow",
+        "caption": "Envía un mensaje de prueba"
+      }
+    ],
+    "success": {
+      "title": "Mensaje recibido",
+      "body": "Payload capturado y enviado al flujo."
+    }
+  }
+}
