@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased — Tutorial Engine V1
+
+- Added a deterministic router for Explainer, Workflow and Screen Tutorial modes.
+- Added a tutorial manifest compiler with output, safe-zone, asset, audio and QA policies.
+- Added the `cano-tutorial` planning CLI.
+- Added tests for routing and production-plan compilation.
+- Preserved external-provider boundaries: the repository plans audio but does not call providers.
+
+
 ## 0.3.0
 
 - Frozen the approved CANO Hybrid Tutorial V2.1 composition baseline.
