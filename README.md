@@ -238,3 +238,16 @@ cano-tutorial render .runtime/tutorial-engine/jobs/<projectId>
 Render Runner V1 does **not** reopen the HTML or create a second animation sequence. It hashes the QA frame sequence, encodes those frames locally with FFmpeg, verifies codec/resolution/FPS/frame count/no-audio with ffprobe, and leaves `visualApproved=false` for the human approval gate.
 
 See [Render Runner V1](docs/RENDER_RUNNER_V1.md).
+
+
+## Visual Approval Gate V1
+
+After the silent master is rendered, human approval is explicit and bound to the exact master SHA-256:
+
+```bash
+cano-tutorial approve .runtime/tutorial-engine/jobs/<projectId> --sha256 <master-sha256> --reviewer "Reviewer name"
+```
+
+Automated QA and rendering never imply approval. If audio is enabled, approval only changes the audio plan to `ready-for-audio-production`; it does not mark `audioReady=true` until actual audio assets exist.
+
+See [Visual Approval Gate V1](docs/VISUAL_APPROVAL_GATE_V1.md).

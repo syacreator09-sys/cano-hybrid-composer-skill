@@ -7,3 +7,4 @@ export { PRODUCTION_BASELINES, getProductionBaseline, buildModeScaffold, buildPr
 export { buildModeSource, buildScreenTutorialHtml, buildExplainerHtml, buildWorkflowHtml, normalizeScreenContent, normalizeExplainerContent, normalizeWorkflowContent } from './mode-builder/index.js';
 export { runQa, findChromiumExecutable, keyframesFromStoryboard, contactFrames, inspectGeometry, HARD_JUMP_THRESHOLD } from './qa-runner/index.js';
 export { runRender, collectQaFrameManifest, buildEncodeArgs, validateProbe, RENDER_RUNNER, RENDER_RUNNER_VERSION } from './render-runner/index.js';
+export { approveVisualMaster, inspectVisualApproval, VISUAL_APPROVAL_GATE, VISUAL_APPROVAL_GATE_VERSION } from './approval-gate/index.js';
