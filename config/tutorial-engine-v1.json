@@ -1,0 +1,49 @@
+{
+  "version": "1.0",
+  "defaultMode": "auto",
+  "defaultCanvas": "9:16",
+  "defaultAudioEnabled": false,
+  "modes": {
+    "explainer": {
+      "baseline": "hybrid-tutorial-v2.2",
+      "defaultDurationSeconds": 12,
+      "defaultFps": 24,
+      "generatedAssets": {
+        "default": 2,
+        "max": 3
+      }
+    },
+    "workflow": {
+      "baseline": "hybrid-tutorial-v2.2",
+      "defaultDurationSeconds": 12,
+      "defaultFps": 24,
+      "generatedAssets": {
+        "default": 0,
+        "max": 2
+      }
+    },
+    "screen_tutorial": {
+      "baseline": "screen-tutorial-v1.2",
+      "defaultDurationSeconds": 15,
+      "defaultFps": 24,
+      "generatedAssets": {
+        "default": 0,
+        "max": 0
+      }
+    }
+  },
+  "audio": {
+    "visualMasterFirst": true,
+    "providerIntegration": "external-only",
+    "preferredProvider": "ElevenLabs",
+    "mixOnlyAfterVisualApproval": true
+  },
+  "qa": {
+    "requireExactFrameCount": true,
+    "maxExactAdjacentDuplicates": 0,
+    "requireSafeAreaPass": true,
+    "requireTransitionInspection": true,
+    "requireDeterministicRenderAtFrame": true,
+    "rejectPrimaryMotionLoops": true
+  }
+}

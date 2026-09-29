@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "projectId": "ai-appointment-explainer",
+  "brief": "Explica cómo una IA entiende un mensaje y confirma una cita",
+  "mode": "auto",
+  "canvas": "9:16",
+  "durationSeconds": 12,
+  "fps": 24,
+  "audio": { "enabled": false }
+}
