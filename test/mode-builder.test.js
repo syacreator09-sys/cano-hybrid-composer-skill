@@ -193,6 +193,7 @@ test('11. screen motion, field labels and scene captions are data-driven',async(
   const manifest=screenManifest({
     projectId:'motion-data',
     content:{
+      captions:undefined,
       steps:[
         {action:'open',caption:'Abre el flujo'},
         {action:'select',caption:'Selecciona Webhook'},
