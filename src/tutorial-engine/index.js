@@ -4,3 +4,4 @@ export { validateTutorialManifest, compileTutorialPlan } from './manifest.js';
 export { OUTPUT_PROFILES, getOutputProfile } from './shared/layout.js';
 export { DEFAULT_QA_GATES } from './shared/qa.js';
 export { PRODUCTION_BASELINES, getProductionBaseline, buildModeScaffold, buildProductionWorkspace, inspectProductionWorkspace } from './production/index.js';
+export { buildModeSource, buildScreenTutorialHtml, buildExplainerHtml, buildWorkflowHtml, normalizeScreenContent, normalizeExplainerContent, normalizeWorkflowContent } from './mode-builder/index.js';

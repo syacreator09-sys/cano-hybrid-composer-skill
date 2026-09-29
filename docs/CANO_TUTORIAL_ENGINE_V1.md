@@ -180,3 +180,28 @@ cano-tutorial status .runtime/tutorial-engine/jobs/<projectId>
 The runner remains provider-safe: it does not render, publish, or call ElevenLabs. Audio remains blocked until the visual master is approved.
 
 See `docs/PRODUCTION_RUNNER_V1.md`.
+
+
+## Mode Builder V1
+
+After Production Runner creates a workspace, Mode Builder turns it into actual project source:
+
+```bash
+cano-tutorial source .runtime/tutorial-engine/jobs/<projectId>
+```
+
+Output:
+
+```text
+source/project/index.html
+source/project/project-data.json
+source/project/build-report.json
+```
+
+The three supported adapters are:
+
+- Screen Tutorial → stable V1.2 + project data + real built-in logos.
+- Explainer → reconstructed Hybrid V2.2 + project data.
+- Workflow → code-first deterministic workflow source.
+
+See `docs/MODE_BUILDER_V1.md`.

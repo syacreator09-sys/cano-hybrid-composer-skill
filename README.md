@@ -193,3 +193,22 @@ The runner creates storyboard, asset/logo slots, QA gates, silent-render plan, a
 It does not render media, publish content or call paid/external providers.
 
 See [Production Runner V1](docs/PRODUCTION_RUNNER_V1.md).
+
+
+## Mode Builder V1
+
+Production workspaces can now be converted into per-project deterministic HTML/JS:
+
+```bash
+cano-tutorial source .runtime/tutorial-engine/jobs/whatsapp-n8n-screen
+```
+
+Mode Builder V1 supports:
+
+- Screen Tutorial V1.2 with real n8n/WhatsApp SVG assets;
+- Hybrid Explainer V2.2 content adaptation;
+- code-first Workflow generation.
+
+The generated source lives in `source/project/` and makes no provider calls or external spend.
+
+See [Mode Builder V1](docs/MODE_BUILDER_V1.md).

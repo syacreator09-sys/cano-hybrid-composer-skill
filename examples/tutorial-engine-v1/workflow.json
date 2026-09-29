@@ -6,5 +6,51 @@
   "canvas": "9:16",
   "durationSeconds": 12,
   "fps": 24,
-  "audio": { "enabled": false }
+  "audio": {
+    "enabled": false
+  },
+  "content": {
+    "logos": [
+      "n8n",
+      "WhatsApp"
+    ],
+    "titleLine1": "De WhatsApp a un",
+    "titleAccent": "lead calificado",
+    "subtitle": "El mensaje pasa por n8n, IA y CRM sin trabajo manual.",
+    "nodes": [
+      {
+        "name": "WhatsApp",
+        "meta": "Entrada",
+        "brand": "WhatsApp"
+      },
+      {
+        "name": "Webhook",
+        "meta": "Captura"
+      },
+      {
+        "name": "n8n",
+        "meta": "Orquesta",
+        "brand": "n8n"
+      },
+      {
+        "name": "Agente IA",
+        "meta": "Califica"
+      },
+      {
+        "name": "CRM",
+        "meta": "Registra"
+      }
+    ],
+    "extraction": {
+      "name": "Ana",
+      "interest": "Automatización de ventas",
+      "timeline": "30 días",
+      "temperature": "TIBIO"
+    },
+    "result": {
+      "title": "Lead registrado",
+      "status": "CRM ACTUALIZADO",
+      "nextAction": "Seguimiento automático · 24 h"
+    }
+  }
 }

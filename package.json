@@ -32,7 +32,8 @@
     "smoke": "node bin/cano-compose.js render examples/avatar-screen-short.json --mock",
     "prepublishOnly": "npm run verify",
     "tutorial:screen": "node bin/cano-tutorial.js plan examples/tutorial-engine-v1/screen-tutorial.json",
-    "tutorial:build": "node bin/cano-tutorial.js build examples/tutorial-engine-v1/screen-tutorial.json"
+    "tutorial:build": "node bin/cano-tutorial.js build examples/tutorial-engine-v1/screen-tutorial.json",
+    "tutorial:source": "node bin/cano-tutorial.js source .runtime/tutorial-engine/jobs/whatsapp-n8n-screen"
   },
   "bin": {
     "cano-compose": "bin/cano-compose.js",

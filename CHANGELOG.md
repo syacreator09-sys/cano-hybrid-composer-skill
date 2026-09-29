@@ -2,6 +2,12 @@
 
 ## Unreleased — Tutorial Engine V1
 
+- Added Mode Builder V1 for deterministic per-project HTML/JS generation.
+- Added Screen Tutorial V1.2 parameterization with real embedded n8n/WhatsApp SVG assets.
+- Added Explainer V2.2 reconstruction and project-content adaptation.
+- Added a code-first Workflow builder with configurable nodes and structured result states.
+- Added guarded source rebuilds and source-built production state transitions.
+
 - Added Production Runner V1 for safe local production workspaces.
 - Added baseline materialization with SHA-256 integrity locks.
 - Added mode-specific storyboard and asset/logo slot scaffolds.
