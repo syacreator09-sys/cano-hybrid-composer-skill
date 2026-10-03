@@ -251,3 +251,22 @@ cano-tutorial approve .runtime/tutorial-engine/jobs/<projectId> --sha256 <master
 Automated QA and rendering never imply approval. If audio is enabled, approval only changes the audio plan to `ready-for-audio-production`; it does not mark `audioReady=true` until actual audio assets exist.
 
 See [Visual Approval Gate V1](docs/VISUAL_APPROVAL_GATE_V1.md).
+
+
+## Audio Layer V1
+
+After the exact silent master is visually approved, externally generated ElevenLabs audio can be registered and SHA-256 locked:
+
+```bash
+cano-tutorial audio-register <workspace> --voice ./voice.mp3 --sfx ./clicks.wav --music ./bed.mp3
+```
+
+Then create the publication master locally:
+
+```bash
+cano-tutorial audio-mix <workspace>
+```
+
+The approved H.264 video stream is preserved with `-c:v copy`; the layer mixes 48 kHz stereo audio to one AAC stream and validates the finished master with ffprobe.
+
+The repository itself makes no ElevenLabs provider call and spends no external credits. See [Audio Layer V1](docs/AUDIO_LAYER_V1.md).
