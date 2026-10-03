@@ -2,6 +2,12 @@
 
 ## Unreleased — Tutorial Engine V1
 
+- Added Audio Layer V1 for post-approval external audio ingestion and local publication mixing.
+- Added SHA-256 locking + ffprobe validation for voice, optional SFX and optional music.
+- Added publication-master mix with approved video stream copy, 48 kHz stereo AAC and exact frame validation.
+- Added `audio-register`, `audio-mix` and `audio-status` CLI commands.
+- Preserved provider boundary: ElevenLabs generation remains external to the repository.
+
 - Added Mode Builder V1 for deterministic per-project HTML/JS generation.
 - Added Screen Tutorial V1.2 parameterization with real embedded n8n/WhatsApp SVG assets.
 - Added Explainer V2.2 reconstruction and project-content adaptation.
