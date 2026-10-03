@@ -35,7 +35,8 @@
     "tutorial:build": "node bin/cano-tutorial.js build examples/tutorial-engine-v1/screen-tutorial.json",
     "tutorial:source": "node bin/cano-tutorial.js source .runtime/tutorial-engine/jobs/whatsapp-n8n-screen",
     "tutorial:qa": "node bin/cano-tutorial.js qa .runtime/tutorial-engine/jobs/whatsapp-n8n-screen",
-    "tutorial:render": "node bin/cano-tutorial.js render .runtime/tutorial-engine/jobs/whatsapp-n8n-screen"
+    "tutorial:render": "node bin/cano-tutorial.js render .runtime/tutorial-engine/jobs/whatsapp-n8n-screen",
+    "tutorial:audio-status": "node bin/cano-tutorial.js audio-status .runtime/tutorial-engine/jobs/whatsapp-n8n-screen"
   },
   "bin": {
     "cano-compose": "bin/cano-compose.js",
