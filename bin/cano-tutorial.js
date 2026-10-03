@@ -8,15 +8,18 @@ import {
   buildModeSource,
   buildProductionWorkspace,
   compileTutorialPlan,
+  inspectAudioLayer,
   inspectProductionWorkspace,
   inspectVisualApproval,
+  mixPublicationMaster,
+  registerAudioAssets,
   routeTutorialBrief,
   runQa,
   runRender,
   validateTutorialManifest
 } from '../src/tutorial-engine/index.js';
 
-const VERSION = '1.5.0';
+const VERSION = '1.6.0';
 const PACKAGE_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const HELP = `CANO Tutorial Engine ${VERSION}
 
@@ -30,6 +33,9 @@ Usage:
   cano-tutorial render <workspace-directory> [--ffmpeg path] [--ffprobe path] [--crf number] [--preset name] [--force]
   cano-tutorial approve <workspace-directory> --sha256 <master-sha256> --reviewer <name> [--note text]
   cano-tutorial approval-status <workspace-directory>
+  cano-tutorial audio-register <workspace-directory> --voice <file> [--sfx <file>] [--music <file>] [--ffprobe path] [--force]
+  cano-tutorial audio-mix <workspace-directory> [--ffmpeg path] [--ffprobe path] [--voice-volume n] [--sfx-volume n] [--music-volume n] [--force]
+  cano-tutorial audio-status <workspace-directory>
   cano-tutorial status <workspace-directory>
   cano-tutorial --help | --version
 
@@ -38,6 +44,7 @@ Mode Builder V1 turns that workspace into deterministic project HTML/JS.
 QA Runner V1 renders and audits every deterministic frame through Python Playwright + local Chromium.
 Render Runner V1 encodes only QA-approved frames into a local silent H.264 master.
 Visual Approval Gate V1 records an explicit human approval tied to the exact silent-master SHA-256.
+Audio Layer V1 ingests externally generated audio and produces the local publication master after approval.
 These commands do not call paid/external providers or publish content.`;
 
 function optionValue(args, name, fallback = null) {
@@ -47,7 +54,7 @@ function optionValue(args, name, fallback = null) {
 
 function positionalAfterCommand(args) {
   const result = [];
-  const valued = new Set(['--mode','--out','--chromium','--python','--ffmpeg','--ffprobe','--crf','--preset','--sha256','--reviewer','--note']);
+  const valued = new Set(['--mode','--out','--chromium','--python','--ffmpeg','--ffprobe','--crf','--preset','--sha256','--reviewer','--note','--voice','--sfx','--music','--voice-volume','--sfx-volume','--music-volume']);
   for (let i = 1; i < args.length; i += 1) {
     if (valued.has(args[i])) { i += 1; continue; }
     if (args[i].startsWith('--')) continue;
@@ -197,6 +204,56 @@ async function main() {
       audioReady:result.state.gates.audioReady,
       publicationMasterReady:result.state.gates.publicationMasterReady
     }, null, 2));
+    return;
+  }
+
+  if (cmd === 'audio-register') {
+    const workspace = args[1];
+    if (!workspace) throw new Error('workspace directory is required');
+    const result = await registerAudioAssets(workspace,{
+      voice:optionValue(args,'--voice'),
+      sfx:optionValue(args,'--sfx'),
+      music:optionValue(args,'--music'),
+      ffprobePath:optionValue(args,'--ffprobe'),
+      force:args.includes('--force')
+    });
+    console.log(JSON.stringify({
+      status:result.manifest.status,
+      workspace:result.workspace,
+      assetsManifest:'audio/run-v1/audio-assets-manifest.json',
+      assets:result.manifest.assets.map(item=>({id:item.id,path:item.path,sha256:item.sha256,durationSeconds:item.probe.durationSeconds})),
+      audioReady:result.state.gates.audioReady
+    }, null, 2));
+    return;
+  }
+
+  if (cmd === 'audio-mix') {
+    const workspace = args[1];
+    if (!workspace) throw new Error('workspace directory is required');
+    const result = await mixPublicationMaster(workspace,{
+      ffmpegPath:optionValue(args,'--ffmpeg'),
+      ffprobePath:optionValue(args,'--ffprobe'),
+      voiceVolume:optionValue(args,'--voice-volume'),
+      sfxVolume:optionValue(args,'--sfx-volume'),
+      musicVolume:optionValue(args,'--music-volume'),
+      force:args.includes('--force')
+    });
+    console.log(JSON.stringify({
+      status:result.report.status,
+      workspace:result.workspace,
+      master:result.report.output.path,
+      sha256:result.report.output.sha256,
+      bytes:result.report.output.bytes,
+      audioCodec:result.report.probe.audioCodec,
+      publicationMasterReady:result.state.gates.publicationMasterReady
+    }, null, 2));
+    return;
+  }
+
+  if (cmd === 'audio-status') {
+    const workspace = args[1];
+    if (!workspace) throw new Error('workspace directory is required');
+    console.log(JSON.stringify(await inspectAudioLayer(workspace), null, 2));
     return;
   }
 
