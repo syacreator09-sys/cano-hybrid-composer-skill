@@ -212,7 +212,7 @@ export function validatePublicationProbe(probe,plan){
   const fps=rate[1]?rate[0]/rate[1]:0;
   if(Math.abs(fps-Number(plan.fps))>.001) errors.push(`fps mismatch: expected ${plan.fps}, got ${fps}`);
   const frames=Number(video?.nb_read_frames??video?.nb_frames);
-  if(Number.isFinite(frames)&&frames!==Number(plan.frames)) errors.push(`frame count mismatch: expected ${plan.frames}, got ${frames}`);
+  if(!Number.isFinite(frames)||frames!==Number(plan.frames)) errors.push(`frame count mismatch: expected ${plan.frames}, got ${video?.nb_read_frames??video?.nb_frames??'unknown'}`);
   if(audios.length!==1) errors.push(`expected exactly 1 audio stream, got ${audios.length}`);
   if(audios[0]&&audios[0].codec_name!=='aac') errors.push(`expected aac audio, got ${audios[0].codec_name}`);
   return {ok:errors.length===0,errors,video,audio:audios[0]??null,fps,frames};
